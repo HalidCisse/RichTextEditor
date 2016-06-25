@@ -6,213 +6,99 @@ namespace RichTextEditor.Extensions
 {
     internal static class HtmlEditingExtension
     {
-        public static bool CanUndo(this HtmlDocument document)
-        {
-            return document.QueryCommandEnabled("Undo");
-        }
+        internal static bool CanUndo(this HtmlDocument document) => document.QueryCommandEnabled("Undo");
 
-        public static bool CanRedo(this HtmlDocument document)
-        {
-            return document.QueryCommandEnabled("Redo");
-        }
+        internal static bool CanRedo(this HtmlDocument document) => document.QueryCommandEnabled("Redo");
 
-        public static bool CanCut(this HtmlDocument document)
-        {
-            return document.QueryCommandEnabled("Cut");
-        }
+        internal static bool CanCut(this HtmlDocument document) => document.QueryCommandEnabled("Cut");
 
-        public static bool CanCopy(this HtmlDocument document)
-        {
-            return document.QueryCommandEnabled("Copy");
-        }
+        internal static bool CanCopy(this HtmlDocument document) => document.QueryCommandEnabled("Copy");
 
-        public static bool CanPaste(this HtmlDocument document)
-        {
-            return document.QueryCommandEnabled("Paste");
-        }
+        internal static bool CanPaste(this HtmlDocument document) => document.QueryCommandEnabled("Paste");
 
-        public static bool CanDelete(this HtmlDocument document)
-        {
-            return document.QueryCommandEnabled("Delete");
-        }
+        internal static bool CanDelete(this HtmlDocument document) => document.QueryCommandEnabled("Delete");
 
-        public static bool CanSubscript(this HtmlDocument document)
-        {
-            return document.QueryCommandSupported("Subscript") && document.QueryCommandEnabled("Subscript");
-        }
+        internal static bool CanSubscript(this HtmlDocument document) => document.QueryCommandSupported("Subscript") && document.QueryCommandEnabled("Subscript");
 
-        public static bool CanSuperscript(this HtmlDocument document)
-        {
-            return document.QueryCommandSupported("Superscript") && document.QueryCommandEnabled("Superscript");
-        }
+        internal static bool CanSuperscript(this HtmlDocument document) => document.QueryCommandSupported("Superscript") && document.QueryCommandEnabled("Superscript");
 
-        public static bool IsJustifyLeft(this HtmlDocument document)
-        {
-            return document.QueryCommandState("JustifyLeft");
-        }
+        internal static bool IsJustifyLeft(this HtmlDocument document) => document.QueryCommandState("JustifyLeft");
 
-        public static bool IsJustifyRight(this HtmlDocument document)
-        {
-            return document.QueryCommandState("JustifyRight");
-        }
+        internal static bool IsJustifyRight(this HtmlDocument document) => document.QueryCommandState("JustifyRight");
 
-        public static bool IsJustifyCenter(this HtmlDocument document)
-        {
-            return document.QueryCommandState("JustifyCenter");
-        }
+        internal static bool IsJustifyCenter(this HtmlDocument document) => document.QueryCommandState("JustifyCenter");
 
-        public static bool IsJustifyFull(this HtmlDocument document)
-        {
-            return document.QueryCommandState("JustifyFull");
-        }
+        internal static bool IsJustifyFull(this HtmlDocument document) => document.QueryCommandState("JustifyFull");
 
-        public static bool IsBold(this HtmlDocument document)
-        {
-            return document.QueryCommandState("Bold");
-        }
+        internal static bool IsBold(this HtmlDocument document) => document.QueryCommandState("Bold");
 
-        public static bool IsItalic(this HtmlDocument document)
-        {
-            return document.QueryCommandState("Italic");
-        }
+        internal static bool IsItalic(this HtmlDocument document) => document.QueryCommandState("Italic");
 
-        public static bool IsUnderline(this HtmlDocument document)
-        {
-            return document.QueryCommandState("Underline");
-        }
+        internal static bool IsUnderline(this HtmlDocument document) => document.QueryCommandState("Underline");
 
-        public static bool IsSubscript(this HtmlDocument document)
-        {
-            return document.QueryCommandSupported("Subscript") &&
-                   document.QueryCommandState("Subscript");
-        }
+        internal static bool IsSubscript(this HtmlDocument document) => document.QueryCommandSupported("Subscript") &&
+                                                                        document.QueryCommandState("Subscript");
 
-        public static bool IsSuperscript(this HtmlDocument document)
-        {
-            return document.QueryCommandSupported("Superscript") &&
-                   document.QueryCommandState("Superscript");
-        }
+        internal static bool IsSuperscript(this HtmlDocument document) => document.QueryCommandSupported("Superscript") &&
+                                                                          document.QueryCommandState("Superscript");
 
-        public static bool IsBulletsList(this HtmlDocument document)
-        {
-            return document.QueryCommandState("InsertUnorderedList");
-        }
+        internal static bool IsBulletsList(this HtmlDocument document) => document.QueryCommandState("InsertUnorderedList");
 
-        public static bool IsNumberedList(this HtmlDocument document)
-        {
-            return document.QueryCommandState("InsertOrderedList");
-        }
+        internal static bool IsNumberedList(this HtmlDocument document) => document.QueryCommandState("InsertOrderedList");
 
-        public static void Undo(this HtmlDocument document)
-        {
-            document.ExecuteCommand("Undo", false, null);
-        }
+        internal static void Undo(this HtmlDocument document) => document.ExecuteCommand("Undo", false, null);
 
-        public static void Redo(this HtmlDocument document)
-        {
-            document.ExecuteCommand("Redo", false, null);
-        }
+        internal static void Redo(this HtmlDocument document) => document.ExecuteCommand("Redo", false, null);
 
-        public static void Cut(this HtmlDocument document)
-        {
-            document.ExecuteCommand("Cut", false, null);
-        }
+        internal static void Cut(this HtmlDocument document) => document.ExecuteCommand("Cut", false, null);
 
-        public static void Copy(this HtmlDocument document)
-        {
-            document.ExecuteCommand("Copy", false, null);
-        }
+        internal static void Copy(this HtmlDocument document) => document.ExecuteCommand("Copy", false, null);
 
-        public static void Paste(this HtmlDocument document)
-        {
-            document.ExecuteCommand("Paste", false, null);
-        }
+        internal static void Paste(this HtmlDocument document) => document.ExecuteCommand("Paste", false, null);
 
-        public static void Delete(this HtmlDocument document)
-        {
-            document.ExecuteCommand("Delete", false, null);
-        }
+        internal static void Delete(this HtmlDocument document) => document.ExecuteCommand("Delete", false, null);
 
-        public static void SelectAll(this HtmlDocument document)
-        {
-            document.ExecuteCommand("SelectAll", false, null);
-        }
+        internal static void SelectAll(this HtmlDocument document) => document.ExecuteCommand("SelectAll", false, null);
 
-        public static void Bold(this HtmlDocument document)
-        {
-            document.ExecuteCommand("Bold", false, null);
-        }
+        internal static void Bold(this HtmlDocument document) => document.ExecuteCommand("Bold", false, null);
 
-        public static void Italic(this HtmlDocument document)
-        {
-            document.ExecuteCommand("Italic", false, null);
-        }
+        internal static void Italic(this HtmlDocument document) => document.ExecuteCommand("Italic", false, null);
 
-        public static void Underline(this HtmlDocument document)
-        {
-            document.ExecuteCommand("Underline", false, null);
-        }
+        internal static void Underline(this HtmlDocument document) => document.ExecuteCommand("Underline", false, null);
 
-        public static void Subscript(this HtmlDocument document)
+        internal static void Subscript(this HtmlDocument document)
         {
             if (document.QueryCommandSupported("Subscript") &&
                 document.QueryCommandEnabled("Subscript"))
                 document.ExecuteCommand("Subscript", false, null);
         }
 
-        public static void Superscript(this HtmlDocument document)
+        internal static void Superscript(this HtmlDocument document)
         {
             if (document.QueryCommandSupported("Superscript") &&
                 document.QueryCommandEnabled("Superscript"))
                 document.ExecuteCommand("Superscript", false, null);
         }
 
-        public static void ClearStyle(this HtmlDocument document)
-        {
-            document.ExecuteCommand("RemoveFormat", false, null);
-        }
+        internal static void ClearStyle(this HtmlDocument document) => document.ExecuteCommand("RemoveFormat", false, null);
 
-        public static void Indent(this HtmlDocument document)
-        {
-            document.ExecuteCommand("Indent", false, null);
-        }
+        internal static void Indent(this HtmlDocument document) => document.ExecuteCommand("Indent", false, null);
 
-        public static void Outdent(this HtmlDocument document)
-        {
-            document.ExecuteCommand("Outdent", false, null);
-        }
+        internal static void Outdent(this HtmlDocument document) => document.ExecuteCommand("Outdent", false, null);
 
-        public static void BulletsList(this HtmlDocument document)
-        {
-            document.ExecuteCommand("InsertUnorderedList", false, null);
-        }
+        internal static void BulletsList(this HtmlDocument document) => document.ExecuteCommand("InsertUnorderedList", false, null);
 
-        public static void NumberedList(this HtmlDocument document)
-        {
-            document.ExecuteCommand("InsertOrderedList", false, null);
-        }
+        internal static void NumberedList(this HtmlDocument document) => document.ExecuteCommand("InsertOrderedList", false, null);
 
-        public static void JustifyLeft(this HtmlDocument document)
-        {
-            document.ExecuteCommand("JustifyLeft", false, null);
-        }
+        internal static void JustifyLeft(this HtmlDocument document) => document.ExecuteCommand("JustifyLeft", false, null);
 
-        public static void JustifyRight(this HtmlDocument document)
-        {
-            document.ExecuteCommand("JustifyRight", false, null);
-        }
+        internal static void JustifyRight(this HtmlDocument document) => document.ExecuteCommand("JustifyRight", false, null);
 
-        public static void JustifyCenter(this HtmlDocument document)
-        {
-            document.ExecuteCommand("JustifyCenter", false, null);
-        }
+        internal static void JustifyCenter(this HtmlDocument document) => document.ExecuteCommand("JustifyCenter", false, null);
 
-        public static void JustifyFull(this HtmlDocument document)
-        {
-            document.ExecuteCommand("JustifyFull", false, null);
-        }
+        internal static void JustifyFull(this HtmlDocument document) => document.ExecuteCommand("JustifyFull", false, null);
 
-        public static void InsertHyperlick(this HtmlDocument document, HyperlinkObject hyperlink)
+        internal static void InsertHyperlick(this HtmlDocument document, HyperlinkObject hyperlink)
         {
             var url = hyperlink.Url.HtmlEncoding();
             var txt = hyperlink.Text.HtmlEncoding();
@@ -221,7 +107,7 @@ namespace RichTextEditor.Extensions
             document.InsertHtml(tx);
         }
 
-        public static void InsertImage(this HtmlDocument document, ImageObject image)
+        internal static void InsertImage(this HtmlDocument document, ImageObject image)
         {
             var hspace = image.HorizontalSpace > 0 ? "hspace=\"" + image.HorizontalSpace + "\" " : string.Empty;
             var vspace = image.VerticalSpace > 0 ? "vspace=\"" + image.VerticalSpace + "\" " : string.Empty;
@@ -232,7 +118,7 @@ namespace RichTextEditor.Extensions
             var title = string.IsNullOrEmpty(image.TitleText) == false
                 ? "title=\"" + image.TitleText + "\" "
                 : string.Empty;
-            var tx = string.Empty;
+            string tx;
             if (string.IsNullOrEmpty(image.LinkUrl))
             {
                 tx = string.Format("<img src=\"{0}\" alt=\"{1}\" width=\"{2}\" height=\"{3}\" {4}{5}{6}{7}{8} />",
@@ -244,13 +130,13 @@ namespace RichTextEditor.Extensions
                 tx =
                     string.Format(
                         "<a href=\"{0}\"><img src=\"{1}\" alt=\"{2}\" width=\"{3}\" height=\"{4}\" {5}{6}{7}{8}{9} /></a>",
-                        image.LinkUrl, image.ImageUrl, image.AltText, image.Width, image.Height, title, hspace, vspace,
+                        image.LinkUrl, url, image.AltText, image.Width, image.Height, title, hspace, vspace,
                         border, align);
             }
             document.InsertHtml(tx);
         }
 
-        public static void InsertTable(this HtmlDocument document, TableObject table)
+        internal static void InsertTable(this HtmlDocument document, TableObject table)
         {
             var rows = table.Rows;
             var cols = table.Columns;
@@ -298,20 +184,16 @@ namespace RichTextEditor.Extensions
             document.InsertHtml(bx.ToString());
         }
 
-        public static FontFamily GetFontFamily(this HtmlDocument document)
+        internal static FontFamily GetFontFamily(this HtmlDocument document)
         {
             if (document.State != HtmlDocumentState.Complete) return null;
             var name = document.QueryCommandValue("FontName") as string;
-            if (name == null) return null;
-            return new FontFamily(name);
+            return name == null ? null : new FontFamily(name);
         }
 
-        public static void SetFontFamily(this HtmlDocument document, FontFamily value)
-        {
-            document.ExecuteCommand("FontName", false, value.ToString());
-        }
+        internal static void SetFontFamily(this HtmlDocument document, FontFamily value) => document.ExecuteCommand("FontName", false, value.ToString());
 
-        public static FontSize GetFontSize(this HtmlDocument document)
+        internal static FontSize GetFontSize(this HtmlDocument document)
         {
             if (document.State != HtmlDocumentState.Complete) return FontSize.No;
             switch (document.QueryCommandValue("FontSize").ToString())
@@ -335,34 +217,22 @@ namespace RichTextEditor.Extensions
             }
         }
 
-        public static void SetFontSize(this HtmlDocument document, FontSize value)
+        internal static void SetFontSize(this HtmlDocument document, FontSize value)
         {
             if (value != null && value != FontSize.No)
-            {
                 document.ExecuteCommand("FontSize", false, value.Key);
-            }
         }
 
-        public static Color GetFontColor(this HtmlDocument document)
-        {
-            if (document.State != HtmlDocumentState.Complete) return Colors.Black;
-            return ColorExtension.ConvertToColor(document.QueryCommandValue("ForeColor").ToString());
-        }
+        internal static Color GetFontColor(this HtmlDocument document) 
+            => document.State != HtmlDocumentState.Complete ? Colors.Black : ColorExtension.ConvertToColor(document.QueryCommandValue("ForeColor").ToString());
 
-        public static void SetFontColor(this HtmlDocument document, Color value)
-        {
-            document.ExecuteCommand("ForeColor", false, string.Format("#{0:X2}{1:X2}{2:X2}", value.R, value.G, value.B));
-        }
+        internal static void SetFontColor(this HtmlDocument document, Color value) 
+            => document.ExecuteCommand("ForeColor", false, string.Format("#{0:X2}{1:X2}{2:X2}", value.R, value.G, value.B));
 
-        public static Color GetLineColor(this HtmlDocument document)
-        {
-            if (document.State != HtmlDocumentState.Complete) return Colors.Black;
-            return ColorExtension.ConvertToColor(document.QueryCommandValue("BackColor").ToString());
-        }
+        internal static Color GetLineColor(this HtmlDocument document) 
+            => document.State != HtmlDocumentState.Complete ? Colors.Black : ColorExtension.ConvertToColor(document.QueryCommandValue("BackColor").ToString());
 
-        public static void SetLineColor(this HtmlDocument document, Color value)
-        {
-            document.ExecuteCommand("BackColor", false, string.Format("#{0:X2}{1:X2}{2:X2}", value.R, value.G, value.B));
-        }
+        internal static void SetLineColor(this HtmlDocument document, Color value) 
+            => document.ExecuteCommand("BackColor", false, string.Format("#{0:X2}{1:X2}{2:X2}", value.R, value.G, value.B));
     }
 }

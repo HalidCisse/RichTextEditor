@@ -37,10 +37,7 @@ namespace RichTextEditor.Features
     [ValueConversion(typeof(object), typeof(Visibility))]
     internal class ObjectToVisibilityConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value != null ? Visibility.Visible : Visibility.Hidden;
-        }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value != null ? Visibility.Visible : Visibility.Hidden;
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -51,10 +48,7 @@ namespace RichTextEditor.Features
     [ValueConversion(typeof(object), typeof(Visibility))]
     internal class ReversedObjectToVisibilityConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value != null ? Visibility.Hidden : Visibility.Visible;
-        }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value != null ? Visibility.Hidden : Visibility.Visible;
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -65,10 +59,7 @@ namespace RichTextEditor.Features
     [ValueConversion(typeof(Color), typeof(Brush))]
     internal class ColorToBrushConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return new SolidColorBrush((Color)value);
-        }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => new SolidColorBrush((Color)value);
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

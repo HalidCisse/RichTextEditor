@@ -2,7 +2,7 @@
     x:Class="RichTextEditor.Views.ColorPicker"
      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:features="clr-namespace:RichTextEditor.Features"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" x:ClassModifier="internal">
 	<UserControl.Resources>
 		<features:ColorToBrushConverter x:Key="ColorConverter" />
 		<Style x:Key="SelectorList" TargetType="{x:Type ListBox}">

@@ -4,11 +4,11 @@ using RichTextEditor.Models;
 
 namespace RichTextEditor.Views
 {
-    public partial class HyperlinkDialog : Window
+    internal partial class HyperlinkDialog 
     {
         private HyperlinkObject _bindingContext;
 
-        public HyperlinkDialog()
+        internal HyperlinkDialog()
         {
             InitializeComponent();
 
@@ -20,7 +20,7 @@ namespace RichTextEditor.Views
             _CANCEL_BUTTON.Click += CancelButton_Click;
         }
 
-        public HyperlinkObject Model
+        internal HyperlinkObject Model
         {
             get { return _bindingContext; }
             set

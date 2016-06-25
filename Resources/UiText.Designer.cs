@@ -448,6 +448,16 @@ namespace RichTextEditor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Images|*.jpg;*.jpeg;*.png;*gif|JPEG|*.jpg;*.jpeg|PNG|*.png|GIF|*.gif.
+        /// </summary>
+        public static string ImageDialog_BrowseButton_Click_Images___jpg___jpeg___png__gif_JPEG___jpg___jpeg_PNG___png_GIF___gif {
+            get {
+                return ResourceManager.GetString("ImageDialog_BrowseButton_Click_Images___jpg___jpeg___png__gif_JPEG___jpg___jpeg_P" +
+                        "NG___png_GIF___gif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alt Text.
         /// </summary>
         public static string Label_AltText {

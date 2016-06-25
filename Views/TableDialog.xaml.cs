@@ -7,14 +7,13 @@ using RichTextEditor.Models;
 namespace RichTextEditor.Views
 {
 
-    public partial class TableDialog : Window
+    internal partial class TableDialog 
     {
-        TableObject _bindingContext;
-        ReadOnlyCollection<Unit> _unitOptions;
-        ReadOnlyCollection<TableHeaderOption> _headerOptions;
-        ReadOnlyCollection<TableAlignment> _alignmentOptions;
+        private TableObject _bindingContext;
+        private ReadOnlyCollection<TableHeaderOption> _headerOptions;
+        private ReadOnlyCollection<TableAlignment> _alignmentOptions;
 
-        public TableDialog()
+        internal TableDialog()
         {
             InitializeComponent();
             InitUnitOptions();
@@ -24,7 +23,7 @@ namespace RichTextEditor.Views
             InitBindingContext();            
         }
 
-        public TableObject Model
+        internal TableObject Model
         {
             get { return _bindingContext; }
             private set
@@ -34,10 +33,9 @@ namespace RichTextEditor.Views
             }
         }
 
-        void InitUnitOptions()
+        private void InitUnitOptions()
         {
-            List<Unit> ls = new List<Unit> { Unit.Pixel, Unit.Percentage };
-            _unitOptions = new ReadOnlyCollection<Unit>(ls);
+            var ls = new List<Unit> { Unit.Pixel, Unit.Percentage };
 
             _WIDTH_UNIT_SELECTION.ItemsSource = ls;
             _HEIGHT_UNIT_SELECTION.ItemsSource = ls;
@@ -45,9 +43,9 @@ namespace RichTextEditor.Views
             _PADDING_UNIT_SELECTION.ItemsSource = ls;
         }
 
-        void InitHeaderOptions()
+        private void InitHeaderOptions()
         {
-            List<TableHeaderOption> ls = new List<TableHeaderOption>
+            var ls = new List<TableHeaderOption>
             {
                 TableHeaderOption.Default, 
                 TableHeaderOption.FirstRow, 
@@ -58,9 +56,9 @@ namespace RichTextEditor.Views
             _HEADER_SELECTION.ItemsSource = _headerOptions;
         }
 
-        void InitAlignmentOptions()
+        private void InitAlignmentOptions()
         {
-            List<TableAlignment> ls = new List<TableAlignment>
+            var ls = new List<TableAlignment>
             {
                 TableAlignment.Default, 
                 TableAlignment.Left, 
@@ -71,7 +69,7 @@ namespace RichTextEditor.Views
             _ALIGNMENT_SELECTION.ItemsSource = _alignmentOptions;
         }
 
-        void InitBindingContext()
+        private void InitBindingContext()
         {
             Model = new TableObject
             {
@@ -89,19 +87,19 @@ namespace RichTextEditor.Views
             };
         }
 
-        void InitEvents()
+        private void InitEvents()
         {
             _OKAY_BUTTON.Click += OkayButton_Click;
             _CANCEL_BUTTON.Click += CancelButton_Click;
         }
 
-        void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             e.Handled = true;
             Close();
         }
 
-        void OkayButton_Click(object sender, RoutedEventArgs e)
+        private void OkayButton_Click(object sender, RoutedEventArgs e)
         {
             e.Handled = true;
             if (ComponentDispatcher.IsThreadModal) DialogResult = true;

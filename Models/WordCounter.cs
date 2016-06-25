@@ -1,15 +1,16 @@
 ﻿using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace RichTextEditor.Models
 {
     internal abstract class WordCounter
     {
-        public abstract int Count(string text);
+        internal abstract int Count(string text);
 
-        public static WordCounter Create(CultureInfo culture)
+        internal static WordCounter Create(CultureInfo culture)
         {
-            string tag = culture.IetfLanguageTag.ToLower();
+            var tag = culture.IetfLanguageTag.ToLower();
 
             switch (tag)
             {
@@ -18,47 +19,19 @@ namespace RichTextEditor.Models
             }
         }
 
-        public static WordCounter Create()
-        {
-            return Create(CultureInfo.CurrentCulture);
-        }
+        internal static WordCounter Create() => Create(CultureInfo.CurrentCulture);
     }
 
     internal class EnglishWordCounter : WordCounter
     {
-        static readonly string Pattern = @"[\S]+";
+        private const string Pattern = @"[\S]+";
 
-        public override int Count(string text)
-        {
-            if (string.IsNullOrEmpty(text))
-            {
-                return 0;
-            }
-
-            MatchCollection collection = Regex.Matches(text, Pattern);
-            return collection.Count;
-        }
+        internal override int Count(string text) => string.IsNullOrEmpty(text) ? 0 : Regex.Matches(text, Pattern).Count;
     }
 
     internal class ChineseWordCounter : WordCounter
     {
-        public override int Count(string text)
-        {
-            if (string.IsNullOrEmpty(text))
-            {
-                return 0;
-            }
-
-            var sec = Regex.Split(text, @"\s");
-            int count = 0;
-            foreach (var si in sec)
-            {
-                int ci = Regex.Matches(si, @"[\u0000-\u00ff]+").Count;
-                foreach (var c in si)
-                    if (c > 0x00FF) ci++;
-                count += ci;
-            }
-            return count;
-        }
+        internal override int Count(string text) 
+            => string.IsNullOrEmpty(text) ? 0 : Regex.Split(text, @"\s").Sum(si => Regex.Matches(si, @"[\u0000-\u00ff]+").Count + si.Count(c => c > 0x00FF));
     }
 }

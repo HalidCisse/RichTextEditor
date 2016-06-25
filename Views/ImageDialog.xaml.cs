@@ -8,14 +8,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using RichTextEditor.Features;
 using RichTextEditor.Models;
+using RichTextEditor.Resources;
 
 namespace RichTextEditor.Views
 {
-                public partial class ImageDialog : Window
+    internal partial class ImageDialog
     {
-        ImageObject _bindingContext;
+        private ImageObject _bindingContext;
 
-        public ImageDialog()
+        internal ImageDialog()
         {
             InitializeComponent();
             InitAlignmentItems();
@@ -23,7 +24,7 @@ namespace RichTextEditor.Views
             InitEvents();
         }
 
-        public ImageObject Model
+        internal ImageObject Model
         {
             get { return _bindingContext; }
             private set
@@ -33,7 +34,7 @@ namespace RichTextEditor.Views
             }
         }
 
-        void InitBindingContext()
+        private void InitBindingContext()
         {
             Model = new ImageObject
             {
@@ -42,20 +43,22 @@ namespace RichTextEditor.Views
             };
         }
 
-        void InitAlignmentItems()
+        private void InitAlignmentItems()
         {
-            List<ImageAlignment> ls = new List<ImageAlignment>();
-            ls.Add(ImageAlignment.Default);
-            ls.Add(ImageAlignment.Left);
-            ls.Add(ImageAlignment.Right);
-            ls.Add(ImageAlignment.Top);
-            ls.Add(ImageAlignment.Center);
-            ls.Add(ImageAlignment.Bottom);
+            var ls = new List<ImageAlignment>
+            {
+                ImageAlignment.Default,
+                ImageAlignment.Left,
+                ImageAlignment.Right,
+                ImageAlignment.Top,
+                ImageAlignment.Center,
+                ImageAlignment.Bottom
+            };
             _IMAGE_ALIGNMENT_SELECTION.ItemsSource = new ReadOnlyCollection<ImageAlignment>(ls);
             _IMAGE_ALIGNMENT_SELECTION.DisplayMemberPath = "Text";
-        } 
+        }
 
-        void InitEvents()
+        private void InitEvents()
         {
             _REFRESH_BUTTON.Click += RefreshButton_Click;
             _BROWSE_BUTTON.Click += BrowseButton_Click;
@@ -68,71 +71,69 @@ namespace RichTextEditor.Views
             ScrollViewContentDragable.SetEnable(_PREVIEW_SCROLL, true);
         }
 
-        void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             e.Handled = true;
             Close();
         }
 
-        void OkayButton_Click(object sender, RoutedEventArgs e)
+        private void OkayButton_Click(object sender, RoutedEventArgs e)
         {
             e.Handled = true;
             if (ComponentDispatcher.IsThreadModal) DialogResult = true;
             Close();
         }
 
-        void ZoomOutButton_Click(object sender, RoutedEventArgs e)
+        private void ZoomOutButton_Click(object sender, RoutedEventArgs e)
         {
-            double val = _RESIZE_SLIDER.Value - 10;
+            var val = _RESIZE_SLIDER.Value - 10;
             if (val < 0) val = 1;
             _RESIZE_SLIDER.Value = val;
         }
 
-        void ZoomInButton_Click(object sender, RoutedEventArgs e)
+        private void ZoomInButton_Click(object sender, RoutedEventArgs e)
         {
-            double val = _RESIZE_SLIDER.Value + 10;
+            var val = _RESIZE_SLIDER.Value + 10;
             if (val > 200) val = 200;
             _RESIZE_SLIDER.Value = val;
         }
 
-        void ResizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ResizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            double p = e.NewValue / 100;
-            _bindingContext.Width = Convert.ToInt32(Math.Round(p * _bindingContext.OriginalWidth));
-            _bindingContext.Height = Convert.ToInt32(Math.Round(p * _bindingContext.OriginalHeight));
+            var p = e.NewValue/100;
+            _bindingContext.Width = Convert.ToInt32(Math.Round(p*_bindingContext.OriginalWidth));
+            _bindingContext.Height = Convert.ToInt32(Math.Round(p*_bindingContext.OriginalHeight));
         }
 
-        void BrowseButton_Click(object sender, RoutedEventArgs e)
+        private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
-            using (OpenFileDialog dialog =
-                 new OpenFileDialog())
+            using (var dialog =
+                new OpenFileDialog())
             {
-                dialog.Filter = "所有格式|*.jpg;*.jpeg;*.png;*gif|JPEG|*.jpg;*.jpeg|PNG|*.png|GIF|*.gif";
+                dialog.Filter = UiText.ImageDialog_BrowseButton_Click_Images___jpg___jpeg___png__gif_JPEG___jpg___jpeg_PNG___png_GIF___gif;
                 dialog.FilterIndex = 0;
-                if (System.Windows.Forms.DialogResult.OK == dialog.ShowDialog())
-                {
-                    _URL_TEXT.Text = dialog.FileName;
-                    LoadImage(dialog.FileName);
-                }
+                if (System.Windows.Forms.DialogResult.OK != dialog.ShowDialog()) return;
+                _URL_TEXT.Text = dialog.FileName;
+                LoadImage(dialog.FileName);
             }
         }
 
-        void RefreshButton_Click(object sender, RoutedEventArgs e)
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            if(!string.IsNullOrEmpty(_URL_TEXT.Text)) LoadImageAsyn(_URL_TEXT.Text);
+            if (!string.IsNullOrEmpty(_URL_TEXT.Text)) LoadImageAsyn(_URL_TEXT.Text);
         }
 
-                                void LoadImage(string uri)
+        private void LoadImage(string uri)
         {
-            _STATUS_PROMPT.Content = "正在加载";
+            _STATUS_PROMPT.Content = "Image";
             _PREVIEW_IMAGE.Source = null;
-            _bindingContext.Image = null; 
+            _bindingContext.Image = null;
 
-                        Uri u = new Uri(uri, UriKind.RelativeOrAbsolute);
-            BitmapImage img = new BitmapImage(u);
+            var u = new Uri(uri, UriKind.RelativeOrAbsolute);
+            var img = new BitmapImage(u);
             _PREVIEW_IMAGE.Source = img;
 
-                        _bindingContext.ImageUrl = u.ToString();
+            _bindingContext.ImageUrl = u.ToString();
             _bindingContext.Image = img;
             _bindingContext.OriginalWidth = img.PixelWidth;
             _bindingContext.OriginalHeight = img.PixelHeight;
@@ -141,27 +142,27 @@ namespace RichTextEditor.Views
             ScrollToCenter();
         }
 
-                                void LoadImageAsyn(string uri)
+        private void LoadImageAsyn(string uri)
         {
-            _STATUS_PROMPT.Content = "正在下载";
+            _STATUS_PROMPT.Content = "Image";
             _PREVIEW_IMAGE.Source = null;
             _bindingContext.Image = null;
             _TOP_CONTENT_AREA.IsEnabled = false;
 
-                        Uri u = new Uri(uri, UriKind.RelativeOrAbsolute);
-            BitmapImage img = new BitmapImage(u);
+            var u = new Uri(uri, UriKind.RelativeOrAbsolute);
+            var img = new BitmapImage(u);
             img.DownloadCompleted += ImageDownloadCompleted;
             img.DownloadFailed += ImageDownloadFailed;
         }
 
-                                void ImageDownloadCompleted(object sender, EventArgs e)
+        private void ImageDownloadCompleted(object sender, EventArgs e)
         {
-                        _STATUS_PROMPT.Content = "下载完成";
+            _STATUS_PROMPT.Content = "Image";
             _TOP_CONTENT_AREA.IsEnabled = true;
-            BitmapImage img = (BitmapImage)sender;
+            var img = (BitmapImage) sender;
             _PREVIEW_IMAGE.Source = img;
 
-                        _bindingContext.ImageUrl = img.UriSource.ToString();
+            _bindingContext.ImageUrl = img.UriSource.ToString();
             _bindingContext.Image = img;
             _bindingContext.OriginalWidth = img.PixelWidth;
             _bindingContext.OriginalHeight = img.PixelHeight;
@@ -170,29 +171,25 @@ namespace RichTextEditor.Views
             ScrollToCenter();
         }
 
-                                void ImageDownloadFailed(object sender, ExceptionEventArgs e)
+        private void ImageDownloadFailed(object sender, ExceptionEventArgs e)
         {
-                        _STATUS_PROMPT.Content = "无法加载图像";
+            _STATUS_PROMPT.Content = "Image";
             _TOP_CONTENT_AREA.IsEnabled = true;
 
-                        _bindingContext.Image = null;
+            _bindingContext.Image = null;
             _bindingContext.Width = 0;
             _bindingContext.Height = 0;
             _bindingContext.OriginalWidth = 0;
             _bindingContext.OriginalHeight = 0;
         }
 
-        void ScrollToCenter()
+        private void ScrollToCenter()
         {
             if (_PREVIEW_IMAGE.Width > _PREVIEW_SCROLL.ViewportWidth)
-            {
-                _PREVIEW_SCROLL.ScrollToHorizontalOffset((_PREVIEW_IMAGE.Width - _PREVIEW_SCROLL.ViewportWidth) / 2);
-            }
+                _PREVIEW_SCROLL.ScrollToHorizontalOffset((_PREVIEW_IMAGE.Width - _PREVIEW_SCROLL.ViewportWidth)/2);
 
             if (_PREVIEW_IMAGE.Height > _PREVIEW_SCROLL.ViewportHeight)
-            {
-                _PREVIEW_SCROLL.ScrollToVerticalOffset((_PREVIEW_IMAGE.Height - _PREVIEW_SCROLL.ViewportHeight) / 2);
-            }
+                _PREVIEW_SCROLL.ScrollToVerticalOffset((_PREVIEW_IMAGE.Height - _PREVIEW_SCROLL.ViewportHeight)/2);
         }
     }
 }

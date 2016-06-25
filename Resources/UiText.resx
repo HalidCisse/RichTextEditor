@@ -263,4 +263,7 @@
   <data name="WinTitle_InsertTable" xml:space="preserve">
     <value>Insert Table</value>
   </data>
+  <data name="ImageDialog_BrowseButton_Click_Images___jpg___jpeg___png__gif_JPEG___jpg___jpeg_PNG___png_GIF___gif" xml:space="preserve">
+    <value>Images|*.jpg;*.jpeg;*.png;*gif|JPEG|*.jpg;*.jpeg|PNG|*.png|GIF|*.gif</value>
+  </data>
 </root>

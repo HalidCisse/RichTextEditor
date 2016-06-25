@@ -1,6 +1,6 @@
 ﻿namespace RichTextEditor.Models
 {
-    public enum HtmlDocumentState
+    internal enum HtmlDocumentState
     {
         Uninitialized,
         Loading,
@@ -9,7 +9,7 @@
         Complete
     }
 
-    public enum EditMode
+    internal enum EditMode
     {
         Visual,
         Source

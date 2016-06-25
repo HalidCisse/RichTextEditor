@@ -6,7 +6,7 @@
         xmlns:features="clr-namespace:RichTextEditor.Features"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
         Title="{x:Static resc:UiText.WinTitle_InsertHyperlink}" Height="140" Width="380"
-        Icon="/RichTextEditor;Component/Resources/Images/hyperlink.png">    
+        Icon="/RichTextEditor;Component/Resources/Images/hyperlink.png" x:ClassModifier="internal">    
     <Window.Resources>
 		<Style TargetType="{x:Type Label}">
 			<Setter Property="VerticalContentAlignment" Value="Center" />

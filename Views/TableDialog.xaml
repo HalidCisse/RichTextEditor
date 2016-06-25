@@ -4,7 +4,8 @@
         xmlns:features="clr-namespace:RichTextEditor.Features"
         xmlns:recs="clr-namespace:RichTextEditor.Resources"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
-        Title="{x:Static recs:UiText.WinTitle_InsertTable}" Height="240" Width="400" Icon="/RichTextEditor;Component/Resources/Images/table.png">
+        Title="{x:Static recs:UiText.WinTitle_InsertTable}" Height="240" Width="400" Icon="/RichTextEditor;Component/Resources/Images/table.png"
+        x:ClassModifier="internal">
 	<Window.Resources>
 		<Style TargetType="{x:Type Label}">
 			<Setter Property="HorizontalContentAlignment" Value="Right" />

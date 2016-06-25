@@ -2,74 +2,74 @@
 
 namespace RichTextEditor.Models
 {
-    public class OptionObject
+    internal class OptionObject
     {
-        public string Text { get; protected set; }
-        public string Value { get; protected set; }
+        internal string Text { get; set; }
+        internal string Value { get; set; }
     }
 
-    public class ImageAlignment : OptionObject
+    internal class ImageAlignment : OptionObject
     {
         protected ImageAlignment() { }
 
-        public static readonly ImageAlignment Default = 
+        internal static readonly ImageAlignment Default = 
             new ImageAlignment { Text = UiText.Align_Default, Value = "" };
 
-        public static readonly ImageAlignment Left = 
+        internal static readonly ImageAlignment Left = 
             new ImageAlignment { Text = UiText.Align_Left, Value = "left" };
 
-        public static readonly ImageAlignment Right = 
+        internal static readonly ImageAlignment Right = 
             new ImageAlignment { Text = UiText.Align_Right, Value = "right" };
 
-        public static readonly ImageAlignment Top = 
+        internal static readonly ImageAlignment Top = 
             new ImageAlignment { Text = UiText.Align_Top, Value = "top" };
 
-        public static readonly ImageAlignment Center = 
+        internal static readonly ImageAlignment Center = 
             new ImageAlignment { Text = UiText.Align_Center, Value = "center" };
 
-        public static readonly ImageAlignment Bottom = 
+        internal static readonly ImageAlignment Bottom = 
             new ImageAlignment { Text = UiText.Align_Bottom, Value = "bottom" };
     }
 
-    public class TableHeaderOption : OptionObject
+    internal class TableHeaderOption : OptionObject
     {
         protected TableHeaderOption() { }
 
-        public static readonly TableHeaderOption Default =
+        internal static readonly TableHeaderOption Default =
             new TableHeaderOption { Text = UiText.Header_Default, Value = "Default" };
 
-        public static readonly TableHeaderOption FirstRow =
+        internal static readonly TableHeaderOption FirstRow =
             new TableHeaderOption { Text = UiText.Header_FirstRow, Value = "FirstRow" };
 
-        public static readonly TableHeaderOption FirstColumn =
+        internal static readonly TableHeaderOption FirstColumn =
             new TableHeaderOption { Text = UiText.Header_FirstColumn, Value = "FirstColumn" };
 
-        public static readonly TableHeaderOption FirstRowAndColumn =
+        internal static readonly TableHeaderOption FirstRowAndColumn =
             new TableHeaderOption { Text = UiText.Header_FirstRowAndColumn, Value = "FirstRowAndColumn" };
     }
-
-    public class TableAlignment : OptionObject
+    
+    internal class TableAlignment : OptionObject
     {
         protected TableAlignment() { }
 
-        public static readonly TableAlignment Default = 
+        internal static readonly TableAlignment Default = 
             new TableAlignment { Text = UiText.Align_Default, Value = "" };
 
-        public static readonly TableAlignment Center = 
+        internal static readonly TableAlignment Center = 
             new TableAlignment { Text = UiText.Align_Center, Value = "center" };
 
-        public static readonly TableAlignment Left = 
+        internal static readonly TableAlignment Left = 
             new TableAlignment { Text = UiText.Align_Left, Value = "left" };
 
-        public static readonly TableAlignment Right = 
+        internal static readonly TableAlignment Right = 
             new TableAlignment { Text = UiText.Align_Right, Value = "right" };        
     }
-
-    public class Unit : OptionObject
+    
+    internal class Unit : OptionObject
     {
         protected Unit() { }
 
-        public static readonly Unit Pixel = new Unit { Text = "px", Value = "px" };
-        public static readonly Unit Percentage = new Unit { Text = "%", Value = "%" };
+        internal static readonly Unit Pixel = new Unit { Text = "px", Value = "px" };
+        internal static readonly Unit Percentage = new Unit { Text = "%", Value = "%" };
     }
 }

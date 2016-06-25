@@ -37,7 +37,8 @@ namespace RichTextEditor.Views
 
         private Window _hostedWindow;
         private DispatcherTimer _styleTimer;
-        private Dictionary<string, ImageObject> _imageDic;
+        // ReSharper disable once CollectionNeverQueried.Local
+        private Dictionary<string, ImageObject> ImageDic { get; set; }
         private string _stylesheet;
         private bool _isDocReady;
 
@@ -47,7 +48,7 @@ namespace RichTextEditor.Views
 
         #region Document Ready Event
 
-        public static readonly RoutedEvent DocumentReadyEvent =
+        internal static readonly RoutedEvent DocumentReadyEvent =
             EventManager.RegisterRoutedEvent("DocumentReady", RoutingStrategy.Direct, typeof (RoutedEventHandler),
                 typeof (HtmlEditor));
 
@@ -61,11 +62,11 @@ namespace RichTextEditor.Views
 
         #region Document State Changed Event
 
-        public static readonly RoutedEvent DocumentStateChangedEvent =
+        internal static readonly RoutedEvent DocumentStateChangedEvent =
             EventManager.RegisterRoutedEvent("DocumentStateChanged", RoutingStrategy.Direct, typeof (RoutedEventHandler),
                 typeof (HtmlEditor));
 
-        public event RoutedEventHandler DocumentStateChanged
+        internal event RoutedEventHandler DocumentStateChanged
         {
             add { AddHandler(DocumentStateChangedEvent, value); }
             remove { RemoveHandler(DocumentStateChangedEvent, value); }
@@ -105,7 +106,7 @@ namespace RichTextEditor.Views
 
         private void OnHtmlEditorLoaded(object sender, RoutedEventArgs e)
         {
-            _imageDic = new Dictionary<string, ImageObject>();
+            ImageDic = new Dictionary<string, ImageObject>();
             _hostedWindow = this.GetParentWindow();
             _styleTimer.Start();
         }
@@ -264,8 +265,8 @@ namespace RichTextEditor.Views
             _TOGGLE_BOLD.IsChecked = Document.IsBold();
             _TOGGLE_ITALIC.IsChecked = Document.IsItalic();
             _TOGGLE_UNDERLINE.IsChecked = Document.IsUnderline();
-            _TOGGLE_SUBSCRIPT.IsChecked = Document.IsSubscript();
-            _TOGGLE_SUPERSCRIPT.IsChecked = Document.IsSuperscript();
+            //_TOGGLE_SUBSCRIPT.IsChecked = Document.IsSubscript();
+            //_TOGGLE_SUPERSCRIPT.IsChecked = Document.IsSuperscript();
             _TOGGLE_BULLETED_LIST.IsChecked = Document.IsBulletsList();
             _TOGGLE_NUMBERED_LIST.IsChecked = Document.IsNumberedList();
             _TOGGLE_JUSTIFY_LEFT.IsChecked = Document.IsJustifyLeft();
@@ -363,20 +364,19 @@ namespace RichTextEditor.Views
             try
             {
                 using (var reader = new StreamReader(StylesheetPath))
-                {
                     _stylesheet = reader.ReadToEnd();
-                }
             }
-            catch (Exception)
+            catch
             {
+                // ignored
             }
         }
 
-        private static readonly string ConfigPath = "RichTextEditor.config.xml";
-        private static readonly string StylesheetPath = "RichTextEditor.stylesheet.css";
-        private static readonly string VisualFontFamiliesPath = @"/RichTextEditor/visualmode/fontfamilies/add/@value";
-        private static readonly string SourceFontFamilyPath = @"/RichTextEditor/sourcemode/fontfamily/@value";
-        private static readonly string SourceFontSizePath = @"/RichTextEditor/sourcemode/fontsize/@value";
+        private const string ConfigPath = "RichTextEditor.config.xml";
+        private const string StylesheetPath = "RichTextEditor.stylesheet.css";
+        private const string VisualFontFamiliesPath = @"/RichTextEditor/visualmode/fontfamilies/add/@value";
+        private const string SourceFontFamilyPath = @"/RichTextEditor/sourcemode/fontfamily/@value";
+        private const string SourceFontSizePath = @"/RichTextEditor/sourcemode/fontsize/@value";
 
         #endregion
 
@@ -386,13 +386,13 @@ namespace RichTextEditor.Views
 
         private EditMode _mode;
 
-        public EditMode EditMode
+        internal EditMode EditMode
         {
             get { return (EditMode) GetValue(EditModeProperty); }
             set { SetValue(EditModeProperty, value); }
         }
 
-        public static readonly DependencyProperty EditModeProperty =
+        internal static readonly DependencyProperty EditModeProperty =
             DependencyProperty.Register("EditMode", typeof (EditMode), typeof (HtmlEditor),
                 new FrameworkPropertyMetadata(EditMode.Visual, OnEditModeChanged));
 
@@ -460,9 +460,7 @@ namespace RichTextEditor.Views
         private void NotifyBindingContentChanged()
         {
             if (_myBindingContent != ContentHtml)
-            {
                 BindingContent = ContentHtml;
-            }
         }
 
         #endregion
@@ -472,16 +470,8 @@ namespace RichTextEditor.Views
             get
             {
                 if (_TOGGLE_CODE_MODE.IsChecked == true)
-                {
-                    var counter = WordCounter.Create();
-                    return counter.Count(_CODE_EDITOR.Text);
-                }
-                if (Document != null && Document.Content != null)
-                {
-                    var counter = WordCounter.Create();
-                    return counter.Count(Document.Text);
-                }
-                return 0;
+                    return WordCounter.Create().Count(_CODE_EDITOR.Text);
+                return Document?.Content == null ? 0 : WordCounter.Create().Count(Document.Text);
             }
         }
 
@@ -489,9 +479,10 @@ namespace RichTextEditor.Views
         {
             get
             {
-                if (_TOGGLE_CODE_MODE.IsChecked == true)
+                if (_TOGGLE_CODE_MODE.IsChecked != true) return _VISUAL_EDITOR.Document?.Body?.InnerHtml;
+                if (_VISUAL_EDITOR.Document?.Body != null)
                     _VISUAL_EDITOR.Document.Body.InnerHtml = _CODE_EDITOR.Text;
-                return _VISUAL_EDITOR.Document.Body.InnerHtml;
+                return _VISUAL_EDITOR.Document?.Body?.InnerHtml;
             }
             set
             {
@@ -516,29 +507,29 @@ namespace RichTextEditor.Views
             }
         }
 
-        public HtmlDocument Document { get; private set; }
+        internal HtmlDocument Document { get; private set; }
 
-        public bool CanUndo => _mode == EditMode.Visual &&
+        internal bool CanUndo => _mode == EditMode.Visual &&
                                Document != null &&
                                Document.QueryCommandEnabled("Undo");
 
-        public bool CanRedo => _mode == EditMode.Visual &&
+        internal bool CanRedo => _mode == EditMode.Visual &&
                                Document != null &&
                                Document.QueryCommandEnabled("Redo");
 
-        public bool CanCut => _mode == EditMode.Visual &&
+        internal bool CanCut => _mode == EditMode.Visual &&
                               Document != null &&
                               Document.QueryCommandEnabled("Cut");
 
-        public bool CanCopy => _mode == EditMode.Visual &&
+        internal bool CanCopy => _mode == EditMode.Visual &&
                                Document != null &&
                                Document.QueryCommandEnabled("Copy");
 
-        public bool CanPaste => _mode == EditMode.Visual &&
+        internal bool CanPaste => _mode == EditMode.Visual &&
                                 Document != null &&
                                 Document.QueryCommandEnabled("Paste");
 
-        public bool CanDelete => _mode == EditMode.Visual &&
+        internal bool CanDelete => _mode == EditMode.Visual &&
                                  Document != null &&
                                  Document.QueryCommandEnabled("Delete");
 
@@ -546,195 +537,83 @@ namespace RichTextEditor.Views
 
         #region Execute Commands
 
-        public void Undo()
-        {
-            if (Document != null)
-                Document.ExecuteCommand("Undo", false, null);
-        }
+        internal void Undo() => Document?.ExecuteCommand("Undo", false, null);
 
-        public void Redo()
-        {
-            if (Document != null)
-                Document.ExecuteCommand("Redo", false, null);
-        }
+        internal void Redo() => Document?.ExecuteCommand("Redo", false, null);
 
-        public void Cut()
-        {
-            if (Document != null)
-                Document.ExecuteCommand("Cut", false, null);
-        }
+        internal void Cut() => Document?.ExecuteCommand("Cut", false, null);
 
-        public void Copy()
-        {
-            if (Document != null)
-                Document.ExecuteCommand("Copy", false, null);
-        }
+        internal void Copy() => Document?.ExecuteCommand("Copy", false, null);
 
-        public void Paste()
-        {
-            Document?.ExecuteCommand("Paste", false, null);
-        }
+        internal void Paste() => Document?.ExecuteCommand("Paste", false, null);
 
-        public void Delete()
-        {
-            Document?.ExecuteCommand("Delete", false, null);
-        }
+        internal void Delete() => Document?.ExecuteCommand("Delete", false, null);
 
-        public void SelectAll()
-        {
-            Document?.ExecuteCommand("SelectAll", false, null);
-        }
+        internal void SelectAll() => Document?.ExecuteCommand("SelectAll", false, null);
 
         #endregion
 
         #region Command Event Bindings
 
-        private void UndoExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            Undo();
-        }
+        private void UndoExecuted(object sender, ExecutedRoutedEventArgs e) => Undo();
 
         private void UndoCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = CanUndo;
 
-        private void RedoExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            Redo();
-        }
+        private void RedoExecuted(object sender, ExecutedRoutedEventArgs e) => Redo();
 
-        private void RedoCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = CanRedo;
-        }
+        private void RedoCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = CanRedo;
 
-        private void CutExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            Cut();
-        }
+        private void CutExecuted(object sender, ExecutedRoutedEventArgs e) => Cut();
 
-        private void CutCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = CanCut;
-        }
+        private void CutCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = CanCut;
 
-        private void CopyExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            Copy();
-        }
+        private void CopyExecuted(object sender, ExecutedRoutedEventArgs e) => Copy();
 
-        private void CopyCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = CanCopy;
-        }
+        private void CopyCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = CanCopy;
 
-        private void PasteExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            Paste();
-        }
+        private void PasteExecuted(object sender, ExecutedRoutedEventArgs e) => Paste();
 
-        private void PasteCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = CanPaste;
-        }
+        private void PasteCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = CanPaste;
 
-        private void DeleteExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            Delete();
-        }
+        private void DeleteExecuted(object sender, ExecutedRoutedEventArgs e) => Delete();
 
-        private void DeleteCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = CanDelete;
-        }
+        private void DeleteCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = CanDelete;
 
-        private void SelectAllExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            SelectAll();
-        }
+        private void SelectAllExecuted(object sender, ExecutedRoutedEventArgs e) => SelectAll();
 
-        private void BoldExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (Document != null) Document.Bold();
-        }
+        private void BoldExecuted(object sender, ExecutedRoutedEventArgs e) => Document?.Bold();
 
-        private void ItalicExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (Document != null) Document.Italic();
-        }
+        private void ItalicExecuted(object sender, ExecutedRoutedEventArgs e) => Document?.Italic();
 
-        private void UnderlineExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (Document != null) Document.Underline();
-        }
+        private void UnderlineExecuted(object sender, ExecutedRoutedEventArgs e) => Document?.Underline();
 
-        private void SubscriptExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (Document != null) Document.Subscript();
-        }
+        private void SubscriptExecuted(object sender, ExecutedRoutedEventArgs e) => Document?.Subscript();
 
-        private void SubscriptCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = _mode == EditMode.Visual && Document != null && Document.CanSubscript();
-        }
+        private void SubscriptCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = _mode == EditMode.Visual && Document != null && Document.CanSubscript();
 
-        private void SuperscriptExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (Document != null) Document.Superscript();
-        }
+        private void SuperscriptExecuted(object sender, ExecutedRoutedEventArgs e) => Document?.Superscript();
 
-        private void SuperscriptCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = _mode == EditMode.Visual && Document != null && Document.CanSuperscript();
-        }
+        private void SuperscriptCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = _mode == EditMode.Visual && Document != null && Document.CanSuperscript();
 
-        private void ClearStyleExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (Document != null) Document.ClearStyle();
-        }
+        private void ClearStyleExecuted(object sender, ExecutedRoutedEventArgs e) => Document?.ClearStyle();
 
-        private void IndentExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (Document != null) Document.Indent();
-        }
+        private void IndentExecuted(object sender, ExecutedRoutedEventArgs e) => Document?.Indent();
 
-        private void OutdentExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (Document != null) Document.Outdent();
-        }
+        private void OutdentExecuted(object sender, ExecutedRoutedEventArgs e) => Document?.Outdent();
 
-        private void BubbledListExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (Document != null) Document.BulletsList();
-        }
+        private void BubbledListExecuted(object sender, ExecutedRoutedEventArgs e) => Document?.BulletsList();
 
-        private void NumericListExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (Document != null) Document.NumberedList();
-        }
+        private void NumericListExecuted(object sender, ExecutedRoutedEventArgs e) => Document?.NumberedList();
 
-        private void JustifyLeftExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (Document != null) Document.JustifyLeft();
-        }
+        private void JustifyLeftExecuted(object sender, ExecutedRoutedEventArgs e) => Document?.JustifyLeft();
 
-        private void JustifyRightExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (Document != null) Document.JustifyRight();
-        }
+        private void JustifyRightExecuted(object sender, ExecutedRoutedEventArgs e) => Document?.JustifyRight();
 
-        private void JustifyCenterExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (Document != null) Document.JustifyCenter();
-        }
+        private void JustifyCenterExecuted(object sender, ExecutedRoutedEventArgs e) => Document?.JustifyCenter();
 
-        private void JustifyFullExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            Document?.JustifyFull();
-        }
+        private void JustifyFullExecuted(object sender, ExecutedRoutedEventArgs e) => Document?.JustifyFull();
 
-        private void EditingCommandCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = Document != null && _mode == EditMode.Visual;
-        }
+        private void EditingCommandCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = Document != null && _mode == EditMode.Visual;
 
         private void InsertHyperlinkExecuted(object sender, ExecutedRoutedEventArgs e)
         {
@@ -754,7 +633,7 @@ namespace RichTextEditor.Views
             var d = new ImageDialog {Owner = _hostedWindow};
             if (d.ShowDialog() != true) return;
             Document.InsertImage(d.Model);
-            _imageDic[d.Model.ImageUrl] = d.Model;
+            ImageDic[d.Model.ImageUrl] = d.Model;
         }
 
         private void InsertTableExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -762,9 +641,7 @@ namespace RichTextEditor.Views
             if (Document == null) return;
             var d = new TableDialog {Owner = _hostedWindow};
             if (d.ShowDialog() == true)
-            {
                 Document.InsertTable(d.Model);
-            }
         }
 
         private void InsertCodeBlockExecuted(object sender, ExecutedRoutedEventArgs e)

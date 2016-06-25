@@ -3,24 +3,20 @@ using System.Windows.Media.Imaging;
 
 namespace RichTextEditor.Models
 {
-    public class HtmlObject : INotifyPropertyChanged
+    internal class HtmlObject : INotifyPropertyChanged
     {
-        #region INotifyPropertyChanged 成员
+        #region INotifyPropertyChanged 
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void RaisePropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
+        protected virtual void RaisePropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         #endregion
     }
 
-    public class HyperlinkObject : HtmlObject
+    internal class HyperlinkObject : HtmlObject
     {
-        public string Url
+        internal string Url
         {
             get { return _fdUrl; }
             set
@@ -30,7 +26,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public string Text
+        internal string Text
         {
             get { return _fdText; }
             set
@@ -40,13 +36,13 @@ namespace RichTextEditor.Models
             }
         }
 
-        string _fdText;
-        string _fdUrl;
+        private string _fdText;
+        private string _fdUrl;
     }
 
-    public class ImageObject : HtmlObject
+    internal class ImageObject : HtmlObject
     {
-        public int Width
+        internal int Width
         {
             get { return _fdWidth; }
             set
@@ -56,7 +52,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public int Height
+        internal int Height
         {
             get { return _fdHeight; }
             set
@@ -66,7 +62,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public int OriginalWidth
+        internal int OriginalWidth
         {
             get { return _fdOriginalWidth; }
             set
@@ -76,7 +72,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public int OriginalHeight
+        internal int OriginalHeight
         {
             get { return _fdOriginalHeight; }
             set
@@ -86,7 +82,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public int HorizontalSpace
+        internal int HorizontalSpace
         {
             get { return _fdHorizontalSpace; }
             set
@@ -96,7 +92,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public int VerticalSpace
+        internal int VerticalSpace
         {
             get { return _fdVerticalSpace; }
             set
@@ -106,7 +102,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public int BorderSize
+        internal int BorderSize
         {
             get { return _fdBorderSize; }
             set
@@ -116,7 +112,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public ImageAlignment Alignment
+        internal ImageAlignment Alignment
         {
             get { return _fdAlignment; }
             set
@@ -126,7 +122,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public string TitleText
+        internal string TitleText
         {
             get { return _fdTitleText; }
             set
@@ -136,7 +132,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public string AltText
+        internal string AltText
         {
             get { return _fdAltText; }
             set
@@ -146,7 +142,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public string LinkUrl
+        internal string LinkUrl
         {
             get { return _fdLinkUrl; }
             set
@@ -156,7 +152,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public string ImageUrl
+        internal string ImageUrl
         {
             get { return _fdImageUrl; }
             set
@@ -166,7 +162,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public BitmapImage Image
+        internal BitmapImage Image
         {
             get { return _fdImage; }
             set
@@ -178,26 +174,26 @@ namespace RichTextEditor.Models
 
         #region 字段
 
-        BitmapImage _fdImage;
-        ImageAlignment _fdAlignment;
-        string _fdImageUrl;
-        string _fdLinkUrl;
-        string _fdAltText;
-        string _fdTitleText;
-        int _fdBorderSize;
-        int _fdVerticalSpace;
-        int _fdHorizontalSpace;
-        int _fdOriginalHeight;
-        int _fdOriginalWidth;
-        int _fdHeight;
-        int _fdWidth; 
+        private BitmapImage _fdImage;
+        private ImageAlignment _fdAlignment;
+        private string _fdImageUrl;
+        private string _fdLinkUrl;
+        private string _fdAltText;
+        private string _fdTitleText;
+        private int _fdBorderSize;
+        private int _fdVerticalSpace;
+        private int _fdHorizontalSpace;
+        private int _fdOriginalHeight;
+        private int _fdOriginalWidth;
+        private int _fdHeight;
+        private int _fdWidth; 
 
         #endregion
     }
 
-    public class TableObject : HtmlObject
+    internal class TableObject : HtmlObject
     {
-        public int Columns
+        internal int Columns
         {
             get { return _fdColumns; }
             set
@@ -208,7 +204,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public int Rows
+        internal int Rows
         {
             get { return _fdRows; }
             set
@@ -219,7 +215,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public int Width
+        internal int Width
         {
             get { return _fdWidth; }
             set
@@ -229,7 +225,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public int Height
+        internal int Height
         {
             get { return _fdHeight; }
             set
@@ -239,7 +235,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public int Spacing
+        internal int Spacing
         {
             get { return _fdSpacing; }
             set
@@ -249,7 +245,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public int Padding
+        internal int Padding
         {
             get { return _fdPadding; }
             set
@@ -259,7 +255,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public int Border
+        internal int Border
         {
             get { return _fdBorder; }
             set
@@ -269,7 +265,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public string Title
+        internal string Title
         {
             get { return _fdTitle; }
             set
@@ -279,7 +275,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public Unit WidthUnit
+        internal Unit WidthUnit
         {
             get { return _fdWidthUnit; }
             set
@@ -289,7 +285,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public Unit HeightUnit
+        internal Unit HeightUnit
         {
             get { return _fdHeightUnit; }
             set
@@ -299,7 +295,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public Unit SpacingUnit
+        internal Unit SpacingUnit
         {
             get { return _fdSpacingUnit; }
             set
@@ -309,7 +305,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public Unit PaddingUnit
+        internal Unit PaddingUnit
         {
             get { return _fdPaddingUnit; }
             set
@@ -319,7 +315,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public TableHeaderOption HeaderOption
+        internal TableHeaderOption HeaderOption
         {
             get { return _fdHeaderOption; }
             set
@@ -329,7 +325,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        public TableAlignment Alignment
+        internal TableAlignment Alignment
         {
             get { return _fdAlignment; }
             set
@@ -339,19 +335,19 @@ namespace RichTextEditor.Models
             }
         }
 
-        TableAlignment _fdAlignment;
-        TableHeaderOption _fdHeaderOption;
-        Unit _fdPaddingUnit;
-        Unit _fdSpacingUnit;
-        Unit _fdHeightUnit;
-        Unit _fdWidthUnit;
-        string _fdTitle;
-        int _fdBorder;
-        int _fdPadding;
-        int _fdSpacing;
-        int _fdHeight;
-        int _fdWidth;
-        int _fdRows;
-        int _fdColumns;
+        private TableAlignment _fdAlignment;
+        private TableHeaderOption _fdHeaderOption;
+        private Unit _fdPaddingUnit;
+        private Unit _fdSpacingUnit;
+        private Unit _fdHeightUnit;
+        private Unit _fdWidthUnit;
+        private string _fdTitle;
+        private int _fdBorder;
+        private int _fdPadding;
+        private int _fdSpacing;
+        private int _fdHeight;
+        private int _fdWidth;
+        private int _fdRows;
+        private int _fdColumns;
     }
 }
