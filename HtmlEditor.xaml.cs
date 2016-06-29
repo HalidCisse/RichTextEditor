@@ -12,11 +12,13 @@ using System.Windows.Threading;
 using System.Xml;
 using System.Xml.XPath;
 using mshtml;
+using MaterialDesignThemes.Wpf;
 using RichTextEditor.Extensions;
 using RichTextEditor.Models;
+using RichTextEditor.Views;
 using HtmlDocument = RichTextEditor.Models.HtmlDocument;
 
-namespace RichTextEditor.Views
+namespace RichTextEditor
 {
     public partial class HtmlEditor
     {
@@ -29,6 +31,8 @@ namespace RichTextEditor.Views
             InitStyles();
             InitEvents();
             InitTimer();
+
+            ShadowAssist.SetShadowDepth(this, ShadowDepth.Depth0);
         }
 
         #endregion
@@ -155,20 +159,11 @@ namespace RichTextEditor.Views
             _TOGGLE_LINE_COLOR.IsChecked = true;
         }
 
-        private void OnLineColorContextMenuClosed(object sender, RoutedEventArgs e)
-        {
-            _TOGGLE_LINE_COLOR.IsChecked = false;
-        }
+        private void OnLineColorContextMenuClosed(object sender, RoutedEventArgs e) => _TOGGLE_LINE_COLOR.IsChecked = false;
 
-        private void OnFontColorPickerSelectedColorChanged(object sender, PropertyChangedEventArgs<Color> e)
-        {
-            Document.SetFontColor(e.NewValue);
-        }
+        private void OnFontColorPickerSelectedColorChanged(object sender, PropertyChangedEventArgs<Color> e) => Document.SetFontColor(e.NewValue);
 
-        private void OnLineColorPickerSelectedColorChanged(object sender, PropertyChangedEventArgs<Color> e)
-        {
-            Document.SetLineColor(e.NewValue);
-        }
+        private void OnLineColorPickerSelectedColorChanged(object sender, PropertyChangedEventArgs<Color> e) => Document.SetLineColor(e.NewValue);
 
         #endregion
 
@@ -189,17 +184,13 @@ namespace RichTextEditor.Views
             if (Document == null) return;
 
             RaiseEvent(_documentStateChangedEventArgs);
-            if (Document.State == HtmlDocumentState.Complete)
+            if (Document.State != HtmlDocumentState.Complete) return;
+            if (_isDocReady)
+                Dispatcher.BeginInvoke(new Action(NotifyBindingContentChanged));
+            else
             {
-                if (_isDocReady)
-                {
-                    Dispatcher.BeginInvoke(new Action(NotifyBindingContentChanged));
-                }
-                else
-                {
-                    _isDocReady = true;
-                    RaiseEvent(new RoutedEventArgs(DocumentReadyEvent));
-                }
+                _isDocReady = true;
+                RaiseEvent(new RoutedEventArgs(DocumentReadyEvent));
             }
         }
 
@@ -222,12 +213,10 @@ namespace RichTextEditor.Views
 
         private void SetStylesheet()
         {
-            if (_stylesheet != null && _VISUAL_EDITOR.Document != null)
-            {
-                var hdoc = (HTMLDocument) _VISUAL_EDITOR.Document.DomDocument;
-                var hstyle = hdoc.createStyleSheet("", 0);
-                hstyle.cssText = _stylesheet;
-            }
+            if (_stylesheet == null || _VISUAL_EDITOR.Document == null) return;
+            var hdoc = (HTMLDocument) _VISUAL_EDITOR.Document.DomDocument;
+            var hstyle = hdoc.createStyleSheet("", 0);
+            hstyle.cssText = _stylesheet;
         }
 
         private void SetInitialContent()
@@ -328,7 +317,7 @@ namespace RichTextEditor.Views
             _CODE_EDITOR.FontSize = srcsize;
         }
 
-        private ReadOnlyCollection<FontSize> GetDefaultFontSizes()
+        private IEnumerable<FontSize> GetDefaultFontSizes()
         {
             var ls = new List<FontSize>
             {

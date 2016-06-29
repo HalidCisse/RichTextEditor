@@ -6,7 +6,7 @@ namespace RichTextEditor.Features
     {
         #region 
 
-        public static RoutedUICommand Undo { get; } = new RoutedUICommand("Undo command", "Undo", typeof(HtmlEditingCommands));
+        public static RoutedUICommand Undo { get; } = new RoutedUICommand();
 
         public static RoutedUICommand Redo { get; } = new RoutedUICommand();
 
@@ -24,7 +24,7 @@ namespace RichTextEditor.Features
 
         #region 
 
-        public static RoutedUICommand Bold { get; } = new RoutedUICommand("Bold command", "Bold", typeof(HtmlEditingCommands));
+        public static RoutedUICommand Bold { get; } = new RoutedUICommand();
 
         public static RoutedUICommand Italic { get; } = new RoutedUICommand();
 
