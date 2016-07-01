@@ -101,6 +101,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Editor.xaml.cs">
+      <DependentUpon>Editor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\ColorExtension.cs" />
     <Compile Include="Extensions\FrameworkElementExtension.cs" />
     <Compile Include="Extensions\HtmlEditingExtension.cs" />
@@ -211,6 +214,10 @@
     <Resource Include="Resources\Images\ZoomOut.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Editor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\R.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -17,14 +17,16 @@ using RichTextEditor.Extensions;
 using RichTextEditor.Models;
 using RichTextEditor.Views;
 using HtmlDocument = RichTextEditor.Models.HtmlDocument;
-
 namespace RichTextEditor
 {
-    public partial class HtmlEditor
+    /// <summary>
+    /// Interaction logic for Editor.xaml
+    /// </summary>
+    public partial class Editor 
     {
         #region Constructor
 
-        public HtmlEditor()
+        public Editor()
         {
             InitializeComponent();
             InitContainer();
@@ -53,8 +55,8 @@ namespace RichTextEditor
         #region Document Ready Event
 
         internal static readonly RoutedEvent DocumentReadyEvent =
-            EventManager.RegisterRoutedEvent("DocumentReady", RoutingStrategy.Direct, typeof (RoutedEventHandler),
-                typeof (HtmlEditor));
+            EventManager.RegisterRoutedEvent("DocumentReady", RoutingStrategy.Direct, typeof(RoutedEventHandler),
+                typeof(HtmlEditor));
 
         public event RoutedEventHandler DocumentReady
         {
@@ -67,8 +69,8 @@ namespace RichTextEditor
         #region Document State Changed Event
 
         internal static readonly RoutedEvent DocumentStateChangedEvent =
-            EventManager.RegisterRoutedEvent("DocumentStateChanged", RoutingStrategy.Direct, typeof (RoutedEventHandler),
-                typeof (HtmlEditor));
+            EventManager.RegisterRoutedEvent("DocumentStateChanged", RoutingStrategy.Direct, typeof(RoutedEventHandler),
+                typeof(HtmlEditor));
 
         internal event RoutedEventHandler DocumentStateChanged
         {
@@ -214,7 +216,7 @@ namespace RichTextEditor
         private void SetStylesheet()
         {
             if (_stylesheet == null || _VISUAL_EDITOR.Document == null) return;
-            var hdoc = (HTMLDocument) _VISUAL_EDITOR.Document.DomDocument;
+            var hdoc = (HTMLDocument)_VISUAL_EDITOR.Document.DomDocument;
             var hstyle = hdoc.createStyleSheet("", 0);
             hstyle.cssText = _stylesheet;
         }
@@ -243,7 +245,7 @@ namespace RichTextEditor
 
         private void InitTimer()
         {
-            _styleTimer = new DispatcherTimer {Interval = TimeSpan.FromMilliseconds(200)};
+            _styleTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
             _styleTimer.Tick += OnTimerTick;
         }
 
@@ -261,7 +263,7 @@ namespace RichTextEditor
             _TOGGLE_JUSTIFY_LEFT.IsChecked = Document.IsJustifyLeft();
             _TOGGLE_JUSTIFY_RIGHT.IsChecked = Document.IsJustifyRight();
             _TOGGLE_JUSTIFY_CENTER.IsChecked = Document.IsJustifyCenter();
-            //_TOGGLE_JUSTIFY_FULL.IsChecked = Document.IsJustifyFull();
+            _TOGGLE_JUSTIFY_FULL.IsChecked = Document.IsJustifyFull();
 
             _FONT_FAMILY_LIST.SelectedItem = Document.GetFontFamily();
             _FONT_SIZE_LIST.SelectedItem = Document.GetFontSize();
@@ -336,7 +338,7 @@ namespace RichTextEditor
         {
             if (Document == null) return;
             var selectionFontFamily = Document.GetFontFamily();
-            var selectedFontFamily = (FontFamily) _FONT_FAMILY_LIST.SelectedValue;
+            var selectedFontFamily = (FontFamily)_FONT_FAMILY_LIST.SelectedValue;
             if (!Equals(selectedFontFamily, selectionFontFamily)) Document.SetFontFamily(selectedFontFamily);
         }
 
@@ -344,7 +346,7 @@ namespace RichTextEditor
         {
             if (Document == null) return;
             var selectionFontSize = Document.GetFontSize();
-            var selectedFontSize = (FontSize) _FONT_SIZE_LIST.SelectedValue;
+            var selectedFontSize = (FontSize)_FONT_SIZE_LIST.SelectedValue;
             if (selectedFontSize != selectionFontSize) Document.SetFontSize(selectedFontSize);
         }
 
@@ -377,18 +379,18 @@ namespace RichTextEditor
 
         internal EditMode EditMode
         {
-            get { return (EditMode) GetValue(EditModeProperty); }
+            get { return (EditMode)GetValue(EditModeProperty); }
             set { SetValue(EditModeProperty, value); }
         }
 
         internal static readonly DependencyProperty EditModeProperty =
-            DependencyProperty.Register("EditMode", typeof (EditMode), typeof (HtmlEditor),
+            DependencyProperty.Register("EditMode", typeof(EditMode), typeof(HtmlEditor),
                 new FrameworkPropertyMetadata(EditMode.Visual, OnEditModeChanged));
 
         private static void OnEditModeChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var editor = (HtmlEditor) sender;
-            if ((EditMode) e.NewValue == EditMode.Visual) editor.SetVisualMode();
+            var editor = (Editor)sender;
+            if ((EditMode)e.NewValue == EditMode.Visual) editor.SetVisualMode();
             else editor.SetSourceMode();
         }
 
@@ -431,18 +433,18 @@ namespace RichTextEditor
 
         public string BindingContent
         {
-            get { return (string) GetValue(BindingContentProperty); }
+            get { return (string)GetValue(BindingContentProperty); }
             set { SetValue(BindingContentProperty, value); }
         }
 
         public static readonly DependencyProperty BindingContentProperty =
-            DependencyProperty.Register("BindingContent", typeof (string), typeof (HtmlEditor),
+            DependencyProperty.Register("BindingContent", typeof(string), typeof(HtmlEditor),
                 new FrameworkPropertyMetadata(string.Empty, OnBindingContentChanged));
 
         private static void OnBindingContentChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var editor = (HtmlEditor) sender;
-            editor._myBindingContent = (string) e.NewValue;
+            var editor = (Editor)sender;
+            editor._myBindingContent = (string)e.NewValue;
             editor.ContentHtml = editor._myBindingContent;
         }
 
@@ -610,7 +612,7 @@ namespace RichTextEditor
             var d = new HyperlinkDialog
             {
                 Owner = _hostedWindow,
-                Model = new HyperlinkObject {Url = "http://"}
+                Model = new HyperlinkObject { Url = "http://" }
             };
             if (d.ShowDialog() == true)
                 Document.InsertHyperlick(d.Model);
@@ -619,7 +621,7 @@ namespace RichTextEditor
         private void InsertImageExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             if (Document == null) return;
-            var d = new ImageDialog {Owner = _hostedWindow};
+            var d = new ImageDialog { Owner = _hostedWindow };
             if (d.ShowDialog() != true) return;
             Document.InsertImage(d.Model);
             ImageDic[d.Model.ImageUrl] = d.Model;
@@ -628,7 +630,7 @@ namespace RichTextEditor
         private void InsertTableExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             if (Document == null) return;
-            var d = new TableDialog {Owner = _hostedWindow};
+            var d = new TableDialog { Owner = _hostedWindow };
             if (d.ShowDialog() == true)
                 Document.InsertTable(d.Model);
         }
