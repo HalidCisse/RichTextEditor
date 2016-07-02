@@ -2,9 +2,9 @@
 {
     internal sealed class FontSize
     {
-        internal int Key { get; set; }
-        internal double Size { get; set; }
-        internal string Text { get; set; }
+        public int Key { get; set; }
+        public double Size { get; set; }
+        public string Text { get; set; }
 
         internal static readonly FontSize No = new FontSize { Size = 0 };
         internal static readonly FontSize XxSmall = new FontSize { Key = 1, Size = 8.5, Text = "8pt" };

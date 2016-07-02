@@ -38,8 +38,8 @@ namespace RichTextEditor.Views
         {
             Model = new ImageObject
             {
-                //todo
-                ImageUrl = ""
+                ImageUrl = "http://",
+                Alignment = ImageAlignment.Default
             };
         }
 

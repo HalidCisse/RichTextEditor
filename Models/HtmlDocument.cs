@@ -6,21 +6,19 @@ namespace RichTextEditor.Models
 {
     internal class HtmlDocument : HtmlObject
     {
-        private readonly IHTMLDocument2 _msHtmlDocInterface;
-
         private readonly System.Windows.Forms.HtmlDocument _sysWinFormHtmlDoc;
-
-        internal HtmlDocument(System.Windows.Forms.HtmlDocument htmlDocument)
+        public IHTMLDocument2 Ihtml { get; }
+        public HtmlDocument(System.Windows.Forms.HtmlDocument htmlDocument)
         {
             _sysWinFormHtmlDoc = htmlDocument;
-            _msHtmlDocInterface = (IHTMLDocument2) htmlDocument.DomDocument;
+            Ihtml = (IHTMLDocument2) htmlDocument.DomDocument;
         }
 
-        internal HtmlDocumentState State
+        public HtmlDocumentState State
         {
             get
             {
-                switch (_msHtmlDocInterface.readyState.ToLower())
+                switch (Ihtml.readyState.ToLower())
                 {
                     case "loading":
                         return HtmlDocumentState.Loading;
@@ -36,9 +34,9 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal string DefaultEncoding => _sysWinFormHtmlDoc.DefaultEncoding;
+        public string DefaultEncoding => _sysWinFormHtmlDoc.DefaultEncoding;
 
-        internal string Encoding
+        public string Encoding
         {
             get { return _sysWinFormHtmlDoc.Encoding; }
             set
@@ -49,7 +47,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal string Title
+        public string Title
         {
             get { return _sysWinFormHtmlDoc.Title; }
             set
@@ -60,7 +58,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal Color BackColor
+        public Color BackColor
         {
             get { return _sysWinFormHtmlDoc.BackColor.ColorConvert(); }
             set
@@ -71,7 +69,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal Color ForeColor
+        public Color ForeColor
         {
             get { return _sysWinFormHtmlDoc.ForeColor.ColorConvert(); }
             set
@@ -82,7 +80,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal Color LinkColor
+        public Color LinkColor
         {
             get { return _sysWinFormHtmlDoc.LinkColor.ColorConvert(); }
             set
@@ -93,7 +91,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal Color ActiveLinkColor
+        public Color ActiveLinkColor
         {
             get { return _sysWinFormHtmlDoc.ActiveLinkColor.ColorConvert(); }
             set
@@ -104,7 +102,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal Color VisitedLinkColor
+        public Color VisitedLinkColor
         {
             get { return _sysWinFormHtmlDoc.VisitedLinkColor.ColorConvert(); }
             set
@@ -115,7 +113,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal string Content
+        public string Content
         {
             get { return _sysWinFormHtmlDoc.Body?.InnerHtml; }
             set
@@ -126,34 +124,35 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal string Text => _sysWinFormHtmlDoc.Body?.InnerText;
+        public string Text => _sysWinFormHtmlDoc.Body?.InnerText;
+        public IHTMLElementCollection Images => Ihtml.images;      
 
-        internal Range Selection => new Range((IHTMLTxtRange) _msHtmlDocInterface.selection.createRange());
+        public Range Selection => new Range((IHTMLTxtRange) Ihtml.selection.createRange());
 
-        internal void ExecuteCommand(string commandId, bool showUi, object value) => _msHtmlDocInterface.execCommand(commandId, showUi, value);
+        public void ExecuteCommand(string commandId, bool showUi, object value) => Ihtml.execCommand(commandId, showUi, value);
 
-        internal void Clear()
+        public void Clear()
         {
             if (_sysWinFormHtmlDoc.Body == null) return;
             _sysWinFormHtmlDoc.Body.InnerHtml = string.Empty;
             RaiseContentChanged();
         }
 
-        internal bool QueryCommandEnabled(string commandId) => _msHtmlDocInterface.queryCommandEnabled(commandId);
+        public bool QueryCommandEnabled(string commandId) => Ihtml.queryCommandEnabled(commandId);
 
-        internal bool QueryCommandIndeterm(string commandId) => _msHtmlDocInterface.queryCommandIndeterm(commandId);
+        public bool QueryCommandIndeterm(string commandId) => Ihtml.queryCommandIndeterm(commandId);
 
-        internal bool QueryCommandState(string commandId) => _msHtmlDocInterface.queryCommandState(commandId);
+        public bool QueryCommandState(string commandId) => Ihtml.queryCommandState(commandId);
 
-        internal bool QueryCommandSupported(string commandId) => _msHtmlDocInterface.queryCommandSupported(commandId);
+        public bool QueryCommandSupported(string commandId) => Ihtml.queryCommandSupported(commandId);
 
-        internal string QueryCommandText(string commandId) => _msHtmlDocInterface.queryCommandText(commandId);
+        public string QueryCommandText(string commandId) => Ihtml.queryCommandText(commandId);
 
-        internal object QueryCommandValue(string commandId) => _msHtmlDocInterface.queryCommandValue(commandId);
+        public object QueryCommandValue(string commandId) => Ihtml.queryCommandValue(commandId);
 
-        internal void InsertHtml(string content)
+        public void InsertHtml(string content)
         {
-            var range = _msHtmlDocInterface.selection.createRange() as IHTMLTxtRange;
+            var range = Ihtml.selection.createRange() as IHTMLTxtRange;
             range?.pasteHTML(content);
             RaiseContentChanged();
         }
@@ -168,40 +167,40 @@ namespace RichTextEditor.Models
         {
             private readonly IHTMLTxtRange _msHtmlTxRange;
 
-            internal Range(IHTMLTxtRange range)
+            public Range(IHTMLTxtRange range)
             {
                 _msHtmlTxRange = range;
             }
 
-            internal bool IsEmpty => string.IsNullOrEmpty(_msHtmlTxRange.text);
+            public bool IsEmpty => string.IsNullOrEmpty(_msHtmlTxRange.text);
 
-            internal string Content => _msHtmlTxRange.htmlText;
+            public string Content => _msHtmlTxRange.htmlText;
 
-            internal string Text => _msHtmlTxRange.text;
+            public string Text => _msHtmlTxRange.text;
 
-            internal void Clear() => _msHtmlTxRange.pasteHTML(string.Empty);
+            public void Clear() => _msHtmlTxRange.pasteHTML(string.Empty);
 
-            internal Range Duplicate() => new Range(_msHtmlTxRange.duplicate());
+            public Range Duplicate() => new Range(_msHtmlTxRange.duplicate());
 
-            internal void ExecuteCommand(string commandId, bool showUi, object value) => _msHtmlTxRange.execCommand(commandId, showUi, value);
+            public void ExecuteCommand(string commandId, bool showUi, object value) => _msHtmlTxRange.execCommand(commandId, showUi, value);
 
-            internal bool InRange(Range range) => _msHtmlTxRange.inRange(range._msHtmlTxRange);
+            public bool InRange(Range range) => _msHtmlTxRange.inRange(range._msHtmlTxRange);
 
-            internal bool IsEqual(Range range) => _msHtmlTxRange.isEqual(range._msHtmlTxRange);
+            public bool IsEqual(Range range) => _msHtmlTxRange.isEqual(range._msHtmlTxRange);
 
-            internal void Replace(string content) => _msHtmlTxRange.pasteHTML(content);
+            public void Replace(string content) => _msHtmlTxRange.pasteHTML(content);
 
-            internal bool QueryCommandEnabled(string commandId) => _msHtmlTxRange.queryCommandEnabled(commandId);
+            public bool QueryCommandEnabled(string commandId) => _msHtmlTxRange.queryCommandEnabled(commandId);
 
-            internal bool QueryCommandIndeterm(string commandId) => _msHtmlTxRange.queryCommandIndeterm(commandId);
+            public bool QueryCommandIndeterm(string commandId) => _msHtmlTxRange.queryCommandIndeterm(commandId);
 
-            internal bool QueryCommandState(string commandId) => _msHtmlTxRange.queryCommandState(commandId);
+            public bool QueryCommandState(string commandId) => _msHtmlTxRange.queryCommandState(commandId);
 
-            internal bool QueryCommandSupported(string commandId) => _msHtmlTxRange.queryCommandSupported(commandId);
+            public bool QueryCommandSupported(string commandId) => _msHtmlTxRange.queryCommandSupported(commandId);
 
-            internal string QueryCommandText(string commandId) => _msHtmlTxRange.queryCommandText(commandId);
+            public string QueryCommandText(string commandId) => _msHtmlTxRange.queryCommandText(commandId);
 
-            internal object QueryCommandValue(string commandId) => _msHtmlTxRange.queryCommandValue(commandId);
+            public object QueryCommandValue(string commandId) => _msHtmlTxRange.queryCommandValue(commandId);
         }
     }
 }

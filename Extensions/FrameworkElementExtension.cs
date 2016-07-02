@@ -4,7 +4,7 @@ namespace RichTextEditor.Extensions
 {
     internal static class FrameworkElementExtension
     {
-        internal static Window GetParentWindow(this FrameworkElement element)
+        public static Window GetParentWindow(this FrameworkElement element)
         {
             DependencyObject dependency = element;
             while (dependency != null)

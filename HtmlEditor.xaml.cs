@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -254,17 +256,15 @@ namespace RichTextEditor
             _TOGGLE_BOLD.IsChecked = Document.IsBold();
             _TOGGLE_ITALIC.IsChecked = Document.IsItalic();
             _TOGGLE_UNDERLINE.IsChecked = Document.IsUnderline();
-            //_TOGGLE_SUBSCRIPT.IsChecked = Document.IsSubscript();
-            //_TOGGLE_SUPERSCRIPT.IsChecked = Document.IsSuperscript();
             _TOGGLE_BULLETED_LIST.IsChecked = Document.IsBulletsList();
             _TOGGLE_NUMBERED_LIST.IsChecked = Document.IsNumberedList();
             _TOGGLE_JUSTIFY_LEFT.IsChecked = Document.IsJustifyLeft();
             _TOGGLE_JUSTIFY_RIGHT.IsChecked = Document.IsJustifyRight();
             _TOGGLE_JUSTIFY_CENTER.IsChecked = Document.IsJustifyCenter();
-            //_TOGGLE_JUSTIFY_FULL.IsChecked = Document.IsJustifyFull();
 
             _FONT_FAMILY_LIST.SelectedItem = Document.GetFontFamily();
             _FONT_SIZE_LIST.SelectedItem = Document.GetFontSize();
+            //UpdateImageSizes();
         }
 
         #endregion
@@ -273,53 +273,14 @@ namespace RichTextEditor
 
         private void InitStyles()
         {
-            var families = new List<FontFamily>();
-            var srcfamily = new FontFamily("Times New Roman");
-            var srcsize = 10;
+            _FONT_FAMILY_LIST.SelectionChanged += (sender, args) => {
+                if (Document == null) return;
+                var selectionFontFamily = Document.GetFontFamily();
+                var selectedFontFamily = (FontFamily)_FONT_FAMILY_LIST.SelectedValue;
+                if (!Equals(selectedFontFamily, selectionFontFamily)) Document.SetFontFamily(selectedFontFamily);
+            };
 
-            try
-            {
-                using (var reader = XmlReader.Create(ConfigPath))
-                {
-                    var xmlDoc = new XPathDocument(reader);
-                    var navDoc = xmlDoc.CreateNavigator();
-                    XPathNodeIterator it;
-                    it = navDoc.Select(VisualFontFamiliesPath);
-                    while (it.MoveNext())
-                    {
-                        var ff = new FontFamily(it.Current.Value);
-                        families.Add(ff);
-                    }
-                    it = navDoc.Select(SourceFontFamilyPath);
-                    while (it.MoveNext())
-                    {
-                        srcfamily = new FontFamily(it.Current.Value);
-                        break;
-                    }
-                    it = navDoc.Select(SourceFontSizePath);
-                    while (it.MoveNext())
-                    {
-                        srcsize = it.Current.ValueAsInt;
-                        break;
-                    }
-                }
-                _FONT_FAMILY_LIST.ItemsSource = new ReadOnlyCollection<FontFamily>(families);
-                _FONT_FAMILY_LIST.SelectionChanged += OnFontFamilyChanged;
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-
-            _FONT_SIZE_LIST.ItemsSource = GetDefaultFontSizes();
-            _FONT_SIZE_LIST.SelectionChanged += OnFontSizeChanged;
-            _CODE_EDITOR.FontFamily = srcfamily;
-            _CODE_EDITOR.FontSize = srcsize;
-        }
-
-        private IEnumerable<FontSize> GetDefaultFontSizes()
-        {
-            var ls = new List<FontSize>
+            _FONT_SIZE_LIST.ItemsSource = new List<FontSize>
             {
                 Models.FontSize.XxSmall,
                 Models.FontSize.XSmall,
@@ -329,25 +290,18 @@ namespace RichTextEditor
                 Models.FontSize.XLarge,
                 Models.FontSize.XxLarge
             };
-            return new ReadOnlyCollection<FontSize>(ls);
-        }
 
-        private void OnFontFamilyChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (Document == null) return;
-            var selectionFontFamily = Document.GetFontFamily();
-            var selectedFontFamily = (FontFamily) _FONT_FAMILY_LIST.SelectedValue;
-            if (!Equals(selectedFontFamily, selectionFontFamily)) Document.SetFontFamily(selectedFontFamily);
-        }
+            _FONT_SIZE_LIST.SelectionChanged += (sender, args) => {
+                if (Document == null) return;
+                var selectionFontSize = Document.GetFontSize();
+                var selectedFontSize = (FontSize)_FONT_SIZE_LIST.SelectedValue;
+                if (selectedFontSize != selectionFontSize) Document.SetFontSize(selectedFontSize);
+            };
 
-        private void OnFontSizeChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (Document == null) return;
-            var selectionFontSize = Document.GetFontSize();
-            var selectedFontSize = (FontSize) _FONT_SIZE_LIST.SelectedValue;
-            if (selectedFontSize != selectionFontSize) Document.SetFontSize(selectedFontSize);
+            _CODE_EDITOR.FontFamily = new FontFamily("Open Sans");
+            _CODE_EDITOR.FontSize = 10;
         }
-
+        
         private void LoadStylesheet()
         {
             try
@@ -361,12 +315,8 @@ namespace RichTextEditor
             }
         }
 
-        private const string ConfigPath = "RichTextEditor.config.xml";
         private const string StylesheetPath = "RichTextEditor.stylesheet.css";
-        private const string VisualFontFamiliesPath = @"/RichTextEditor/visualmode/fontfamilies/add/@value";
-        private const string SourceFontFamilyPath = @"/RichTextEditor/sourcemode/fontfamily/@value";
-        private const string SourceFontSizePath = @"/RichTextEditor/sourcemode/fontsize/@value";
-
+        
         #endregion
 
         #region Properties
@@ -540,6 +490,11 @@ namespace RichTextEditor
 
         internal void SelectAll() => Document?.ExecuteCommand("SelectAll", false, null);
 
+        private void BackgroundColorExecuted(object sender, RoutedEventArgs routedEventArgs)
+        {
+            //todo
+        }
+
         #endregion
 
         #region Command Event Bindings
@@ -610,7 +565,7 @@ namespace RichTextEditor
             var d = new HyperlinkDialog
             {
                 Owner = _hostedWindow,
-                Model = new HyperlinkObject {Url = "http://"}
+                Model = new HyperlinkObject {Url = "http://", Text = Document.Selection.Text }
             };
             if (d.ShowDialog() == true)
                 Document.InsertHyperlick(d.Model);
@@ -638,5 +593,74 @@ namespace RichTextEditor
         }
 
         #endregion
+            
+        private string ImagesToBase64(string html)
+        {
+            var matches = Regex.Matches(html, @"<img[^>]*?src\s*=\s*([""']?[^'"">]+?['""])[^>]*?>", RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline);
+            foreach (Match match in matches)
+            {
+                var src = match.Groups[1].Value;
+                src = src.Trim('\"');
+                if (!File.Exists(src)) continue;
+                var ext = Path.GetExtension(src);
+                if (ext.Length <= 0) continue;
+                ext = ext.Substring(1);
+                src = string.Format("'data:image/{0};base64,{1}'", ext, Convert.ToBase64String(File.ReadAllBytes(src)));
+                html = html.Replace(match.Groups[1].Value, src);
+            }
+            return html;
+        }
+
+        private void UpdateImageSizes()
+        {
+            foreach (var image in Document.Images.Cast<HTMLImg>().Where(image => image != null))
+            {
+                if (image.height != image.style.pixelHeight && image.style.pixelHeight != 0)
+                    image.height = image.style.pixelHeight;
+                if (image.width != image.style.pixelWidth && image.style.pixelWidth != 0)
+                    image.width = image.style.pixelWidth;
+            }
+        }
+
+        public System.Drawing.Color BodyBackgroundColor
+        {
+            get
+            {
+                if (Document.Ihtml.body != null && Document.Ihtml.body.style != null && Document.Ihtml.body.style.backgroundColor != null)
+                    return ConvertToColor(Document.Ihtml.body.style.backgroundColor.ToString());
+                return System.Drawing.Color.White;
+            }
+            set
+            {
+                if (Document.State != HtmlDocumentState.Complete) return;
+                if (Document.Ihtml.body?.style == null) return;
+                var colorstr =
+                    string.Format("#{0:X2}{1:X2}{2:X2}", value.R, value.G, value.B);
+                Document.Ihtml.body.style.backgroundColor = colorstr;
+            }
+        }
+
+        private static System.Drawing.Color ConvertToColor(string clrs)
+        {
+            int red, green, blue;
+            // sometimes clrs is HEX organized as (RED)(GREEN)(BLUE)
+            if (clrs.StartsWith("#"))
+            {
+                var clrn = Convert.ToInt32(clrs.Substring(1), 16);
+                red = (clrn >> 16) & 255;
+                green = (clrn >> 8) & 255;
+                blue = clrn & 255;
+            }
+            else // otherwise clrs is DECIMAL organized as (BlUE)(GREEN)(RED)
+            {
+                int clrn = Convert.ToInt32(clrs);
+                red = clrn & 255;
+                green = (clrn >> 8) & 255;
+                blue = (clrn >> 16) & 255;
+            }
+            var incolor = System.Drawing.Color.FromArgb(red, green, blue);
+            return incolor;
+        }
+
     }
 }

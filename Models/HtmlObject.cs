@@ -16,7 +16,7 @@ namespace RichTextEditor.Models
 
     internal class HyperlinkObject : HtmlObject
     {
-        internal string Url
+        public string Url
         {
             get { return _fdUrl; }
             set
@@ -26,7 +26,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal string Text
+        public string Text
         {
             get { return _fdText; }
             set
@@ -42,7 +42,7 @@ namespace RichTextEditor.Models
 
     internal class ImageObject : HtmlObject
     {
-        internal int Width
+        public int Width
         {
             get { return _fdWidth; }
             set
@@ -52,7 +52,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal int Height
+        public int Height
         {
             get { return _fdHeight; }
             set
@@ -62,7 +62,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal int OriginalWidth
+        public int OriginalWidth
         {
             get { return _fdOriginalWidth; }
             set
@@ -72,7 +72,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal int OriginalHeight
+        public int OriginalHeight
         {
             get { return _fdOriginalHeight; }
             set
@@ -82,7 +82,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal int HorizontalSpace
+        public int HorizontalSpace
         {
             get { return _fdHorizontalSpace; }
             set
@@ -92,7 +92,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal int VerticalSpace
+        public int VerticalSpace
         {
             get { return _fdVerticalSpace; }
             set
@@ -102,7 +102,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal int BorderSize
+        public int BorderSize
         {
             get { return _fdBorderSize; }
             set
@@ -112,7 +112,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal ImageAlignment Alignment
+        public ImageAlignment Alignment
         {
             get { return _fdAlignment; }
             set
@@ -122,7 +122,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal string TitleText
+        public string TitleText
         {
             get { return _fdTitleText; }
             set
@@ -132,7 +132,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal string AltText
+        public string AltText
         {
             get { return _fdAltText; }
             set
@@ -142,7 +142,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal string LinkUrl
+        public string LinkUrl
         {
             get { return _fdLinkUrl; }
             set
@@ -152,7 +152,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal string ImageUrl
+        public string ImageUrl
         {
             get { return _fdImageUrl; }
             set
@@ -162,7 +162,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal BitmapImage Image
+        public BitmapImage Image
         {
             get { return _fdImage; }
             set
@@ -172,7 +172,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        #region 字段
+        #region 
 
         private BitmapImage _fdImage;
         private ImageAlignment _fdAlignment;
@@ -193,7 +193,7 @@ namespace RichTextEditor.Models
 
     internal class TableObject : HtmlObject
     {
-        internal int Columns
+        public int Columns
         {
             get { return _fdColumns; }
             set
@@ -204,7 +204,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal int Rows
+        public int Rows
         {
             get { return _fdRows; }
             set
@@ -215,7 +215,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal int Width
+        public int Width
         {
             get { return _fdWidth; }
             set
@@ -225,7 +225,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal int Height
+        public int Height
         {
             get { return _fdHeight; }
             set
@@ -235,7 +235,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal int Spacing
+        public int Spacing
         {
             get { return _fdSpacing; }
             set
@@ -245,7 +245,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal int Padding
+        public int Padding
         {
             get { return _fdPadding; }
             set
@@ -255,7 +255,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal int Border
+        public int Border
         {
             get { return _fdBorder; }
             set
@@ -265,7 +265,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal string Title
+        public string Title
         {
             get { return _fdTitle; }
             set
@@ -275,7 +275,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal Unit WidthUnit
+        public Unit WidthUnit
         {
             get { return _fdWidthUnit; }
             set
@@ -285,7 +285,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal Unit HeightUnit
+        public Unit HeightUnit
         {
             get { return _fdHeightUnit; }
             set
@@ -295,7 +295,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal Unit SpacingUnit
+        public Unit SpacingUnit
         {
             get { return _fdSpacingUnit; }
             set
@@ -305,7 +305,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal Unit PaddingUnit
+        public Unit PaddingUnit
         {
             get { return _fdPaddingUnit; }
             set
@@ -315,7 +315,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal TableHeaderOption HeaderOption
+        public TableHeaderOption HeaderOption
         {
             get { return _fdHeaderOption; }
             set
@@ -325,7 +325,7 @@ namespace RichTextEditor.Models
             }
         }
 
-        internal TableAlignment Alignment
+        public TableAlignment Alignment
         {
             get { return _fdAlignment; }
             set

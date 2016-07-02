@@ -9,6 +9,7 @@
         Complete
     }
 
+
     internal enum EditMode
     {
         Visual,
