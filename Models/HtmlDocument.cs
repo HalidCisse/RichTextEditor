@@ -1,4 +1,6 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Diagnostics;
+using System.Windows.Media;
 using mshtml;
 using RichTextEditor.Extensions;
 
@@ -142,7 +144,18 @@ namespace RichTextEditor.Models
 
         public bool QueryCommandIndeterm(string commandId) => Ihtml.queryCommandIndeterm(commandId);
 
-        public bool QueryCommandState(string commandId) => Ihtml.queryCommandState(commandId);
+        public bool QueryCommandState(string commandId)
+        {
+            try
+            {
+                return Ihtml.queryCommandState(commandId);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return false;
+            }
+        }
 
         public bool QueryCommandSupported(string commandId) => Ihtml.queryCommandSupported(commandId);
 

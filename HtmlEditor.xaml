@@ -167,252 +167,252 @@
         </ContextMenu>
     </UserControl.ContextMenu>
 
+    <materialDesign:DialogHost Name="_DIALOG" Identifier="RootDialog" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+        <DockPanel>
+            <DockPanel.Resources>
 
-    <DockPanel>
-        <DockPanel.Resources>
+                <Style x:Key="ToolBarImage"
+                    TargetType="{x:Type Image}">
+                    <Setter Property="Width"
+                        Value="16" />
+                    <Setter Property="Height"
+                        Value="16" />
+                </Style>
 
-            <Style x:Key="ToolBarImage"
-                TargetType="{x:Type Image}">
-                <Setter Property="Width"
-                    Value="16" />
-                <Setter Property="Height"
-                    Value="16" />
-            </Style>
+                <Style TargetType="{x:Type RadioButton}" >
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type RadioButton}">
+                                <Border x:Name="Bd"
+                                    Padding="4 1"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="1">
+                                    <ContentPresenter Content="{TemplateBinding Content}" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsChecked"
+                                            Value="True">
+                                        <Setter Property="Background"
+                                            Value="#333399FF"
+                                            TargetName="Bd" />
+                                        <Setter Property="BorderBrush"
+                                            Value="#FF3399FF"
+                                            TargetName="Bd" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
 
-            <Style TargetType="{x:Type RadioButton}" >
-                <Setter Property="Margin" Value="0" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type RadioButton}">
-                            <Border x:Name="Bd"
-                                Padding="4 1"
-                                BorderBrush="Transparent"
-                                BorderThickness="1">
-                                <ContentPresenter Content="{TemplateBinding Content}" />
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsChecked"
-                                        Value="True">
-                                    <Setter Property="Background"
-                                        Value="#333399FF"
-                                        TargetName="Bd" />
-                                    <Setter Property="BorderBrush"
-                                        Value="#FF3399FF"
-                                        TargetName="Bd" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
+                <Style x:Key="ToggleContextMenu"
+                    TargetType="{x:Type ContextMenu}">
+                    <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ContextMenu}">
+                                <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="Gainsboro"
+                                    BorderThickness="1">
+                                    <ItemsPresenter Margin="{TemplateBinding Padding}"
+                                                SnapsToDevicePixels="true" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="ItemContainerStyle">
+                        <Setter.Value>
+                            <Style TargetType="{x:Type MenuItem}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type MenuItem}">
+                                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                            ContentSource="Header"
+                                                            RecognizesAccessKey="False" />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
 
-            <Style x:Key="ToggleContextMenu"
-                TargetType="{x:Type ContextMenu}">
-                <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type ContextMenu}">
-                            <Border Background="{TemplateBinding Background}"
-                                BorderBrush="Gainsboro"
-                                BorderThickness="1">
-                                <ItemsPresenter Margin="{TemplateBinding Padding}"
-                                            SnapsToDevicePixels="true" />
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="ItemContainerStyle">
-                    <Setter.Value>
-                        <Style TargetType="{x:Type MenuItem}">
+            </DockPanel.Resources>
+
+            <ToolBarTray materialDesign:ShadowAssist.ShadowDepth="Depth1" DockPanel.Dock="Top">
+                <ToolBar x:Name="_COMMAND_BAR">
+                    <ToolBar.Resources>
+
+                        <Style x:Key="_BUTTON_STYLE" TargetType="{x:Type ButtonBase}" >
+                            <Setter Property="Margin" Value="0" />
+                            <Setter Property="Foreground" Value="DarkSlateGray" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="OverridesDefaultStyle" Value="True" />
                             <Setter Property="Template">
                                 <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type MenuItem}">
-                                        <ContentPresenter Margin="{TemplateBinding Padding}"
-                                                        ContentSource="Header"
-                                                        RecognizesAccessKey="False" />
+                                    <ControlTemplate TargetType="{x:Type ButtonBase}">
+                                        <Border x:Name="Bd" Padding="2 1" BorderBrush="Transparent" BorderThickness="1">
+                                            <ContentPresenter/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#333399FF" TargetName="Bd" />
+                                                <Setter Property="BorderBrush" Value="#FF3399FF" TargetName="Bd" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
                         </Style>
-                    </Setter.Value>
-                </Setter>
-            </Style>
 
-        </DockPanel.Resources>
-
-        <ToolBarTray materialDesign:ShadowAssist.ShadowDepth="Depth1" DockPanel.Dock="Top">
-            <ToolBar x:Name="_COMMAND_BAR">
-                <ToolBar.Resources>
-
-                    <Style x:Key="_BUTTON_STYLE" TargetType="{x:Type ButtonBase}" >
-                        <Setter Property="Margin" Value="0" />
-                        <Setter Property="Foreground" Value="DarkSlateGray" />
-                        <Setter Property="VerticalAlignment" Value="Center" />
-                        <Setter Property="HorizontalAlignment" Value="Center" />
-                        <Setter Property="OverridesDefaultStyle" Value="True" />
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type ButtonBase}">
-                                    <Border x:Name="Bd" Padding="2 1" BorderBrush="Transparent" BorderThickness="1">
-                                        <ContentPresenter/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#333399FF" TargetName="Bd" />
-                                            <Setter Property="BorderBrush" Value="#FF3399FF" TargetName="Bd" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-
-                    <Style x:Key="_TOOGLE_STYLE" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource _BUTTON_STYLE}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                    <Border x:Name="Bd" Padding="2 1" BorderBrush="Transparent" BorderThickness="1">
-                                        <ContentPresenter/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsChecked" Value="True">
-                                            <Setter Property="Background" Value="#333399FF" TargetName="Bd" />
-                                            <Setter Property="Foreground" Value="Black" />
-                                            <Setter Property="BorderBrush" Value="#FF3399FF" TargetName="Bd" />
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#333399FF" TargetName="Bd" />
-                                            <Setter Property="BorderBrush" Value="#FF3399FF" TargetName="Bd" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-
-                </ToolBar.Resources>
-
-                <ComboBox x:Name="_FONT_FAMILY_LIST"
-                            Width="128" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ComboBoxItem}">
-                            <Setter Property="FontFamily" Value="{Binding Content, RelativeSource={RelativeSource Mode=Self}}" />
-                            <Setter Property="FontSize" Value="14" />
+                        <Style x:Key="_TOOGLE_STYLE" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource _BUTTON_STYLE}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <Border x:Name="Bd" Padding="2 1" BorderBrush="Transparent" BorderThickness="1">
+                                            <ContentPresenter/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="Background" Value="#333399FF" TargetName="Bd" />
+                                                <Setter Property="Foreground" Value="Black" />
+                                                <Setter Property="BorderBrush" Value="#FF3399FF" TargetName="Bd" />
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#333399FF" TargetName="Bd" />
+                                                <Setter Property="BorderBrush" Value="#FF3399FF" TargetName="Bd" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
                         </Style>
-                    </ComboBox.ItemContainerStyle>
-                </ComboBox>
 
-                <ComboBox x:Name="_FONT_SIZE_LIST"
-                            Width="42" DisplayMemberPath="Text">
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ComboBoxItem}">
-                            <Setter Property="FontSize" Value="{Binding Size}" />
-                        </Style>
-                    </ComboBox.ItemContainerStyle>
-                </ComboBox>
+                    </ToolBar.Resources>
 
-                <ToggleButton x:Name="_TOGGLE_BOLD" Style="{DynamicResource _TOOGLE_STYLE}"
-                                ToolTip="{x:Static resc:UiText.Button_Bold}" Command="features:HtmlEditingCommands.Bold">
-                    <materialDesign:PackIcon Kind="FormatBold" />
-                </ToggleButton>
+                    <ComboBox x:Name="_FONT_FAMILY_LIST"
+                                Width="128" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="FontFamily" Value="{Binding Content, RelativeSource={RelativeSource Mode=Self}}" />
+                                <Setter Property="FontSize" Value="14" />
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
 
-                <ToggleButton x:Name="_TOGGLE_ITALIC" Style="{DynamicResource _TOOGLE_STYLE}"
-                                ToolTip="{x:Static resc:UiText.Button_Italic}" Command="features:HtmlEditingCommands.Italic">
-                    <materialDesign:PackIcon Kind="FormatItalic" />
-                </ToggleButton>
+                    <ComboBox x:Name="_FONT_SIZE_LIST"
+                                Width="42" DisplayMemberPath="Text">
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="FontSize" Value="{Binding Size}" />
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
 
-                <ToggleButton x:Name="_TOGGLE_UNDERLINE" Style="{DynamicResource _TOOGLE_STYLE}"
-                                ToolTip="{x:Static resc:UiText.Button_Underline}" Command="features:HtmlEditingCommands.Underline">
-                    <materialDesign:PackIcon Kind="FormatUnderline" />
-                </ToggleButton>
+                    <ToggleButton x:Name="_TOGGLE_BOLD" Style="{DynamicResource _TOOGLE_STYLE}"
+                                    ToolTip="{x:Static resc:UiText.Button_Bold}" Command="features:HtmlEditingCommands.Bold">
+                        <materialDesign:PackIcon Kind="FormatBold" />
+                    </ToggleButton>
 
-                <ToggleButton x:Name="_TOGGLE_FONT_COLOR" Style="{DynamicResource _TOOGLE_STYLE}"
-                                ToolTip="{x:Static resc:UiText.Button_FontColor}">
-                    <ToggleButton.ContextMenu>
-                        <ContextMenu x:Name="_FONT_COLOR_CONTEXT_MENU" Style="{StaticResource ToggleContextMenu}">
-                            <views:ColorPicker x:Name="_FONT_COLOR_PICKER" />
-                        </ContextMenu>
-                    </ToggleButton.ContextMenu>
-                    <Image Style="{StaticResource ToolBarImage}" Source="/RichTextEditor;Component/Resources/Images/fontcolor.png" />
-                </ToggleButton>
+                    <ToggleButton x:Name="_TOGGLE_ITALIC" Style="{DynamicResource _TOOGLE_STYLE}"
+                                    ToolTip="{x:Static resc:UiText.Button_Italic}" Command="features:HtmlEditingCommands.Italic">
+                        <materialDesign:PackIcon Kind="FormatItalic" />
+                    </ToggleButton>
 
-                <ToggleButton x:Name="_TOGGLE_LINE_COLOR" Style="{DynamicResource _TOOGLE_STYLE}"
-                                ToolTip="{x:Static resc:UiText.Button_LineColor}">
-                    <ToggleButton.ContextMenu>
-                        <ContextMenu x:Name="_LINE_COLOR_CONTEXT_MENU" Style="{StaticResource ToggleContextMenu}">
-                            <views:ColorPicker x:Name="_LINE_COLOR_PICKER" />
-                        </ContextMenu>
-                    </ToggleButton.ContextMenu>
-                    <Image Style="{StaticResource ToolBarImage}" Source="/RichTextEditor;Component/Resources/Images/linecolor.png" />
-                </ToggleButton>
+                    <ToggleButton x:Name="_TOGGLE_UNDERLINE" Style="{DynamicResource _TOOGLE_STYLE}"
+                                    ToolTip="{x:Static resc:UiText.Button_Underline}" Command="features:HtmlEditingCommands.Underline">
+                        <materialDesign:PackIcon Kind="FormatUnderline" />
+                    </ToggleButton>
 
-                <Separator />
+                    <ToggleButton x:Name="_TOGGLE_FONT_COLOR" Style="{DynamicResource _TOOGLE_STYLE}"
+                                    ToolTip="{x:Static resc:UiText.Button_FontColor}">
+                        <ToggleButton.ContextMenu>
+                            <ContextMenu x:Name="_FONT_COLOR_CONTEXT_MENU" Style="{StaticResource ToggleContextMenu}">
+                                <views:ColorPicker x:Name="_FONT_COLOR_PICKER" />
+                            </ContextMenu>
+                        </ToggleButton.ContextMenu>
+                        <Image Style="{StaticResource ToolBarImage}" Source="/RichTextEditor;Component/Resources/Images/fontcolor.png" />
+                    </ToggleButton>
 
-                <ToggleButton x:Name="_TOGGLE_BULLETED_LIST" Style="{DynamicResource _TOOGLE_STYLE}"
-                                ToolTip="{x:Static resc:UiText.Button_BulletedList}" Command="features:HtmlEditingCommands.BubbledList">
-                    <materialDesign:PackIcon Kind="FormatListBulleted" />
-                </ToggleButton>
+                    <ToggleButton x:Name="_TOGGLE_LINE_COLOR" Style="{DynamicResource _TOOGLE_STYLE}"
+                                    ToolTip="{x:Static resc:UiText.Button_LineColor}">
+                        <ToggleButton.ContextMenu>
+                            <ContextMenu x:Name="_LINE_COLOR_CONTEXT_MENU" Style="{StaticResource ToggleContextMenu}">
+                                <views:ColorPicker x:Name="_LINE_COLOR_PICKER" />
+                            </ContextMenu>
+                        </ToggleButton.ContextMenu>
+                        <Image Style="{StaticResource ToolBarImage}" Source="/RichTextEditor;Component/Resources/Images/linecolor.png" />
+                    </ToggleButton>
 
-                <ToggleButton x:Name="_TOGGLE_NUMBERED_LIST" Style="{DynamicResource _TOOGLE_STYLE}"
-                                ToolTip="{x:Static resc:UiText.Button_NumberedList}" Command="features:HtmlEditingCommands.NumericList">
-                    <materialDesign:PackIcon Kind="FormatListNumbers" />
-                </ToggleButton>
+                    <Separator />
 
-                <RadioButton x:Name="_TOGGLE_JUSTIFY_LEFT" Style="{DynamicResource _TOOGLE_STYLE}"
-                                ToolTip="{x:Static resc:UiText.Button_JustifyLeft}" GroupName="Alignment" Command="features:HtmlEditingCommands.JustifyLeft">
-                    <materialDesign:PackIcon Kind="FormatAlignLeft" />
-                </RadioButton>
+                    <ToggleButton x:Name="_TOGGLE_BULLETED_LIST" Style="{DynamicResource _TOOGLE_STYLE}"
+                                    ToolTip="{x:Static resc:UiText.Button_BulletedList}" Command="features:HtmlEditingCommands.BubbledList">
+                        <materialDesign:PackIcon Kind="FormatListBulleted" />
+                    </ToggleButton>
 
-                <RadioButton x:Name="_TOGGLE_JUSTIFY_CENTER" Style="{DynamicResource _TOOGLE_STYLE}"
-                                ToolTip="{x:Static resc:UiText.Button_JustifyCenter}" GroupName="Alignment" Command="features:HtmlEditingCommands.JustifyCenter">
-                    <materialDesign:PackIcon Kind="FormatAlignCenter" />
-                </RadioButton>
+                    <ToggleButton x:Name="_TOGGLE_NUMBERED_LIST" Style="{DynamicResource _TOOGLE_STYLE}"
+                                    ToolTip="{x:Static resc:UiText.Button_NumberedList}" Command="features:HtmlEditingCommands.NumericList">
+                        <materialDesign:PackIcon Kind="FormatListNumbers" />
+                    </ToggleButton>
 
-                <RadioButton x:Name="_TOGGLE_JUSTIFY_RIGHT" Style="{DynamicResource _TOOGLE_STYLE}"
-                                ToolTip="{x:Static resc:UiText.Button_JustifyRight}" GroupName="Alignment" Command="features:HtmlEditingCommands.JustifyRight">
-                    <materialDesign:PackIcon Kind="FormatAlignRight" />
-                </RadioButton>
+                    <RadioButton x:Name="_TOGGLE_JUSTIFY_LEFT" Style="{DynamicResource _TOOGLE_STYLE}"
+                                    ToolTip="{x:Static resc:UiText.Button_JustifyLeft}" GroupName="Alignment" Command="features:HtmlEditingCommands.JustifyLeft">
+                        <materialDesign:PackIcon Kind="FormatAlignLeft" />
+                    </RadioButton>
 
-                <Separator />
+                    <RadioButton x:Name="_TOGGLE_JUSTIFY_CENTER" Style="{DynamicResource _TOOGLE_STYLE}"
+                                    ToolTip="{x:Static resc:UiText.Button_JustifyCenter}" GroupName="Alignment" Command="features:HtmlEditingCommands.JustifyCenter">
+                        <materialDesign:PackIcon Kind="FormatAlignCenter" />
+                    </RadioButton>
 
-                <Button x:Name="_INSERT_HYPERLINK" Style="{DynamicResource _BUTTON_STYLE}"
-                        ToolTip="{x:Static resc:UiText.Button_InsertHyperlink}" Command="features:HtmlEditingCommands.InsertHyperlink">
-                    <materialDesign:PackIcon Kind="LinkVariant" />
-                </Button>
+                    <RadioButton x:Name="_TOGGLE_JUSTIFY_RIGHT" Style="{DynamicResource _TOOGLE_STYLE}"
+                                    ToolTip="{x:Static resc:UiText.Button_JustifyRight}" GroupName="Alignment" Command="features:HtmlEditingCommands.JustifyRight">
+                        <materialDesign:PackIcon Kind="FormatAlignRight" />
+                    </RadioButton>
 
-                <Button x:Name="_INSERT_IMAGE" Style="{DynamicResource _BUTTON_STYLE}"
-                        ToolTip="{x:Static resc:UiText.Button_InsertImage}"
-                        Command="features:HtmlEditingCommands.InsertImage">
-                    <materialDesign:PackIcon Kind="Image" />
-                </Button>
+                    <Separator />
 
-                <Button x:Name="_INSERT_TABLE" Style="{DynamicResource _BUTTON_STYLE}"
-                        ToolTip="{x:Static resc:UiText.Button_InsertTable}"
-                        Command="features:HtmlEditingCommands.InsertTable">
-                    <materialDesign:PackIcon Kind="Table" />
-                </Button>
+                    <Button x:Name="_INSERT_HYPERLINK" Style="{DynamicResource _BUTTON_STYLE}"
+                            ToolTip="{x:Static resc:UiText.Button_InsertHyperlink}" Command="features:HtmlEditingCommands.InsertHyperlink">
+                        <materialDesign:PackIcon Kind="LinkVariant" />
+                    </Button>
 
-                <Separator />
+                    <Button x:Name="_INSERT_IMAGE" Style="{DynamicResource _BUTTON_STYLE}"
+                            ToolTip="{x:Static resc:UiText.Button_InsertImage}"
+                            Command="features:HtmlEditingCommands.InsertImage">
+                        <materialDesign:PackIcon Kind="Image" />
+                    </Button>
 
-                <ToggleButton x:Name="_TOGGLE_CODE_MODE" Style="{DynamicResource _TOOGLE_STYLE}"
-                                ToolTip="{x:Static resc:UiText.Button_CodeMode}">
-                    <materialDesign:PackIcon Kind="CodeTags" />
-                </ToggleButton>
-            </ToolBar>
-        </ToolBarTray>
+                    <Button x:Name="_INSERT_TABLE" Style="{DynamicResource _BUTTON_STYLE}"
+                            ToolTip="{x:Static resc:UiText.Button_InsertTable}"
+                            Command="features:HtmlEditingCommands.InsertTable">
+                        <materialDesign:PackIcon Kind="Table" />
+                    </Button>
 
-        <Grid>
-            <TextBox x:Name="_CODE_EDITOR"
-                        AcceptsReturn="True"
-                        AcceptsTab="True"
-                        AutoWordSelection="True"
-                        SpellCheck.IsEnabled="True"
-                        VerticalScrollBarVisibility="Auto"
-                        TextWrapping="Wrap" />
-            <WindowsFormsHost x:Name="_BROWSER_HOST">
-                <wf:WebBrowser x:Name="_VISUAL_EDITOR" />
-            </WindowsFormsHost>
-        </Grid>
+                    <Separator />
 
-    </DockPanel>
+                    <ToggleButton x:Name="_TOGGLE_CODE_MODE" Style="{DynamicResource _TOOGLE_STYLE}"
+                                    ToolTip="{x:Static resc:UiText.Button_CodeMode}">
+                        <materialDesign:PackIcon Kind="CodeTags" />
+                    </ToggleButton>
+                </ToolBar>
+            </ToolBarTray>
+
+            <Grid>
+                <TextBox x:Name="_CODE_EDITOR"
+                            AcceptsReturn="True"
+                            AcceptsTab="True"
+                            AutoWordSelection="True"
+                            SpellCheck.IsEnabled="True"
+                            VerticalScrollBarVisibility="Auto"
+                            TextWrapping="Wrap" />
+                <WindowsFormsHost x:Name="_BROWSER_HOST">
+                    <wf:WebBrowser x:Name="_VISUAL_EDITOR" />
+                </WindowsFormsHost>
+            </Grid>
+        </DockPanel>
+    </materialDesign:DialogHost>
 </UserControl>

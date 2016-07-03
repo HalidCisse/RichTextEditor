@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using System.Xml;
-using System.Xml.XPath;
 using mshtml;
 using MaterialDesignThemes.Wpf;
 using RichTextEditor.Extensions;
@@ -559,16 +555,16 @@ namespace RichTextEditor
 
         private void EditingCommandCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = Document != null && _mode == EditMode.Visual;
 
-        private void InsertHyperlinkExecuted(object sender, ExecutedRoutedEventArgs e)
+        private async void InsertHyperlinkExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             if (Document == null) return;
-            var d = new HyperlinkDialog
+
+            await DialogHost.Show(new LinkDialog(Document.Selection.Text), "RootDialog", (s, args) =>
             {
-                Owner = _hostedWindow,
-                Model = new HyperlinkObject {Url = "http://", Text = Document.Selection.Text }
-            };
-            if (d.ShowDialog() == true)
-                Document.InsertHyperlick(d.Model);
+                var link = args.Parameter as HyperlinkObject;
+                if (link != null)
+                    Document.InsertHyperlick(link);
+            });            
         }
 
         private void InsertImageExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -593,7 +589,7 @@ namespace RichTextEditor
         }
 
         #endregion
-            
+
         private string ImagesToBase64(string html)
         {
             var matches = Regex.Matches(html, @"<img[^>]*?src\s*=\s*([""']?[^'"">]+?['""])[^>]*?>", RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline);

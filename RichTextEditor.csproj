@@ -108,6 +108,7 @@
     <Compile Include="Extensions\FrameworkElementExtension.cs" />
     <Compile Include="Extensions\HtmlEditingExtension.cs" />
     <Compile Include="Extensions\HtmlExtension.cs" />
+    <Compile Include="Extensions\NameValidator.cs" />
     <Compile Include="Features\AttachedBehaviors.cs" />
     <Compile Include="Features\HtmlEditingCommands.cs" />
     <Compile Include="Features\ValueConverter.cs" />
@@ -146,6 +147,9 @@
     </Compile>
     <Compile Include="Views\ImageDialog.xaml.cs">
       <DependentUpon>ImageDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LinkDialog.xaml.cs">
+      <DependentUpon>LinkDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TableDialog.xaml.cs">
       <DependentUpon>TableDialog.xaml</DependentUpon>
@@ -245,6 +249,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LinkDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TableDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
