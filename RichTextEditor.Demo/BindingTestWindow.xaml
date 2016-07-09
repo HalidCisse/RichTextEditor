@@ -1,0 +1,25 @@
+﻿<Window x:Class="RichTextEditor.Demo.BindingTestWindow"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:views="clr-namespace:RichTextEditor.Views;assembly=RichTextEditor"
+        xmlns:richTextEditor="clr-namespace:RichTextEditor;assembly=RichTextEditor"
+        Title="Binding Test"
+        Height="500"
+        Width="740">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <richTextEditor:HtmlEditor x:Name="_HTML_EDITOR"
+                          BindingContent="{Binding Text, ElementName=_TEXT_EDITOR, Mode=TwoWay}" />
+        <TextBox x:Name="_TEXT_EDITOR"
+                 Grid.Row="1"
+                 AcceptsReturn="True"
+                 AcceptsTab="True"
+                 AutoWordSelection="True"
+                 Text="Editor Binding Content Test."
+                 VerticalScrollBarVisibility="Auto"
+                 TextWrapping="Wrap" />
+    </Grid>
+</Window>

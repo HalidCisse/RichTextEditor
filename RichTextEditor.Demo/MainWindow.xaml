@@ -1,0 +1,51 @@
+﻿<Window x:Class="RichTextEditor.Demo.MainWindow"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:properties="clr-namespace:RichTextEditor.Demo.Properties"
+        xmlns:richTextEditor="clr-namespace:RichTextEditor;assembly=RichTextEditor"
+        WindowStartupLocation="CenterScreen"
+        Title="Editor Demo"
+        Height="400"
+        Width="680">
+    <Window.Resources>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="Padding"
+                    Value="0" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center" />
+        </Style>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Padding"
+                    Value="4,2" />
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <Border DockPanel.Dock="Bottom"
+                BorderBrush="#FFC5C5C5"
+                BorderThickness="0,1,0,0"
+                Padding="8">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Right"
+                            Orientation="Horizontal">
+                    <Button x:Name="_BINDING_TEST_BUTTON"
+                            Content="Binding Test"
+                            Margin="8,0" />
+                    <Button x:Name="_GET_HTML_BUTTON"
+                            Content="{x:Static properties:Resources.Button_GetHtml}"
+                            Margin="8,0" />
+                    <Button x:Name="_GET_TEXT_BUTTON"
+                            Content="{x:Static properties:Resources.Button_GetText}"
+                            Margin="8,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{x:Static properties:Resources.Label_WordCount}" />
+                    <Label x:Name="_WORD_COUNT_TEXT"
+                           Content="0" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        <richTextEditor:HtmlEditor x:Name="_EDITOR" />
+    </DockPanel>
+</Window>
