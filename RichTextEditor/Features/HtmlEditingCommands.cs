@@ -74,6 +74,5 @@ namespace RichTextEditor.Features
 
         #endregion
 
-       
     }
 }

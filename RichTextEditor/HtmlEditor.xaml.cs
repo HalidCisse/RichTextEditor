@@ -297,7 +297,7 @@ namespace RichTextEditor
             _CODE_EDITOR.FontFamily = new FontFamily("Open Sans");
             _CODE_EDITOR.FontSize = 10;
         }
-        
+
         private void LoadStylesheet()
         {
             try
@@ -312,7 +312,7 @@ namespace RichTextEditor
         }
 
         private const string StylesheetPath = "RichTextEditor.stylesheet.css";
-        
+
         #endregion
 
         #region Properties
@@ -559,12 +559,12 @@ namespace RichTextEditor
         {
             if (Document == null) return;
 
-            await DialogHost.Show(new LinkDialog(Document.Selection.Text), "RootDialog", (s, args) =>
+            await DialogHost.Show(new LinkDialog(Document.Selection.Text), "HtmlEditorRootDialog", (s, args) =>
             {
                 var link = args.Parameter as HyperlinkObject;
                 if (link != null)
                     Document.InsertHyperlick(link);
-            });            
+            });
         }
 
         private void InsertImageExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -649,14 +649,12 @@ namespace RichTextEditor
             }
             else // otherwise clrs is DECIMAL organized as (BlUE)(GREEN)(RED)
             {
-                int clrn = Convert.ToInt32(clrs);
+                var clrn = Convert.ToInt32(clrs);
                 red = clrn & 255;
                 green = (clrn >> 8) & 255;
                 blue = (clrn >> 16) & 255;
             }
-            var incolor = System.Drawing.Color.FromArgb(red, green, blue);
-            return incolor;
+            return System.Drawing.Color.FromArgb(red, green, blue);
         }
-
     }
 }

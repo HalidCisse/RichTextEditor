@@ -4,7 +4,7 @@ using RichTextEditor.Models;
 
 namespace RichTextEditor.Views
 {
-    internal partial class HyperlinkDialog 
+    internal partial class HyperlinkDialog
     {
         private HyperlinkObject _bindingContext;
 

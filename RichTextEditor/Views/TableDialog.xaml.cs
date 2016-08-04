@@ -6,8 +6,7 @@ using RichTextEditor.Models;
 
 namespace RichTextEditor.Views
 {
-
-    internal partial class TableDialog 
+    internal partial class TableDialog
     {
         private TableObject _bindingContext;
         private ReadOnlyCollection<TableHeaderOption> _headerOptions;
@@ -20,7 +19,7 @@ namespace RichTextEditor.Views
             InitHeaderOptions();
             InitAlignmentOptions();
             InitEvents();
-            InitBindingContext();            
+            InitBindingContext();
         }
 
         internal TableObject Model
@@ -47,10 +46,10 @@ namespace RichTextEditor.Views
         {
             var ls = new List<TableHeaderOption>
             {
-                TableHeaderOption.Default, 
-                TableHeaderOption.FirstRow, 
-                TableHeaderOption.FirstColumn, 
-                TableHeaderOption.FirstRowAndColumn 
+                TableHeaderOption.Default,
+                TableHeaderOption.FirstRow,
+                TableHeaderOption.FirstColumn,
+                TableHeaderOption.FirstRowAndColumn
             };
             _headerOptions = new ReadOnlyCollection<TableHeaderOption>(ls);
             _HEADER_SELECTION.ItemsSource = _headerOptions;
@@ -60,9 +59,9 @@ namespace RichTextEditor.Views
         {
             var ls = new List<TableAlignment>
             {
-                TableAlignment.Default, 
-                TableAlignment.Left, 
-                TableAlignment.Right, 
+                TableAlignment.Default,
+                TableAlignment.Left,
+                TableAlignment.Right,
                 TableAlignment.Center
             };
             _alignmentOptions = new ReadOnlyCollection<TableAlignment>(ls);

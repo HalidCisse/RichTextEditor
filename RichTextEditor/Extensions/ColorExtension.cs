@@ -11,7 +11,6 @@ namespace RichTextEditor.Extensions
 
         internal static Color ColorConvert(this System.Drawing.Color color) => Color.FromArgb(color.A, color.R, color.G, color.B);
 
-
         internal static System.Drawing.Color ColorConvert(this Color color) => System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
 
         internal static bool ColorEqual(this System.Drawing.Color drawingColor, Color mediaColor) => drawingColor.A == mediaColor.A &&

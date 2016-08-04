@@ -31,7 +31,7 @@ namespace RichTextEditor.Models
 
     internal class ChineseWordCounter : WordCounter
     {
-        internal override int Count(string text) 
+        internal override int Count(string text)
             => string.IsNullOrEmpty(text) ? 0 : Regex.Split(text, @"\s").Sum(si => Regex.Matches(si, @"[\u0000-\u00ff]+").Count + si.Count(c => c > 0x00FF));
     }
 }

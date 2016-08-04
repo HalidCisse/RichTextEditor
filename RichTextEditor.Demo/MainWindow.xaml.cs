@@ -4,7 +4,6 @@ using System.Windows.Threading;
 
 namespace RichTextEditor.Demo
 {
-
     public partial class MainWindow
     {
         private DispatcherTimer _wordCountTimer;
@@ -23,7 +22,7 @@ namespace RichTextEditor.Demo
             _EDITOR.DocumentReady += Editor_DocumentReady;
             _GET_HTML_BUTTON.Click += GetHtmlButton_Click;
             _GET_TEXT_BUTTON.Click += GetTextButton_Click;
-            _BINDING_TEST_BUTTON.Click += BindingTestButton_Click;            
+            _BINDING_TEST_BUTTON.Click += BindingTestButton_Click;
         }
 
         private void BindingTestButton_Click(object sender, RoutedEventArgs e)

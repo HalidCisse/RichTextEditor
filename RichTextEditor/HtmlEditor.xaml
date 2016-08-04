@@ -167,7 +167,7 @@
         </ContextMenu>
     </UserControl.ContextMenu>
 
-    <materialDesign:DialogHost Name="_DIALOG" Identifier="RootDialog" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+    <materialDesign:DialogHost Name="_DIALOG" Identifier="HtmlEditorRootDialog" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
         <DockPanel>
             <DockPanel.Resources>
 

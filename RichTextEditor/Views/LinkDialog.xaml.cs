@@ -5,7 +5,7 @@ using RichTextEditor.Models;
 
 namespace RichTextEditor.Views
 {
-    internal partial class LinkDialog 
+    internal partial class LinkDialog
     {
         private int _errors;
 
@@ -19,8 +19,8 @@ namespace RichTextEditor.Views
                 Url = "http://"
             };
         }
-            
-        private void Executed(object sender, ExecutedRoutedEventArgs e) 
+
+        private void Executed(object sender, ExecutedRoutedEventArgs e)
             => DialogHost.CloseDialogCommand.Execute((HyperlinkObject)DataContext, this);
 
         private void CanExecute(object sender, CanExecuteRoutedEventArgs e)
