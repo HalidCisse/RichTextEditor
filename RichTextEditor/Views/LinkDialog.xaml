@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:models="clr-namespace:RichTextEditor.Models"
              xmlns:extensions="clr-namespace:RichTextEditor.Extensions"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              Padding="26" Width="400" x:ClassModifier="internal">
 
@@ -40,7 +40,7 @@
         <Viewbox Grid.Row="1" Grid.Column="0">
             <materialDesign:PackIcon Kind="TagTextOutline" Foreground="{Binding ElementName=_TEXT, Path=BorderBrush}" />
         </Viewbox>
-        <TextBox x:Name="_TEXT" Grid.Row="1" Grid.Column="1" Margin="10 0 0 0" materialDesign:TextFieldAssist.Hint="Text" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="40" Validation.Error="Validation_Error">
+        <TextBox x:Name="_TEXT" Grid.Row="1" Grid.Column="1" Margin="10 0 0 0" materialDesign:HintAssist.Hint="Text" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="40" Validation.Error="Validation_Error">
             <TextBox.Text>
                 <Binding Path="Text" NotifyOnValidationError="True" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -53,16 +53,14 @@
         <Viewbox Grid.Row="2" Grid.Column="0">
             <materialDesign:PackIcon Kind="LinkVariant" Foreground="{Binding ElementName=_LINK, Path=BorderBrush}" />
         </Viewbox>
-        <TextBox x:Name="_LINK" Text="{Binding Url}" Grid.Row="2" Grid.Column="1" Margin="10 0 0 0" materialDesign:TextFieldAssist.Hint="link" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="40" />
+        <TextBox x:Name="_LINK" Text="{Binding Url}" Grid.Row="2" Grid.Column="1" Margin="10 0 0 0" materialDesign:HintAssist.Hint="link" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="40" />
         
         <Grid Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" VerticalAlignment="Bottom">
             <Button Content="CANCEL" IsCancel="True" Margin="8 0 0 0" Style="{DynamicResource MaterialDesignFlatButton}" HorizontalAlignment="Left"
-                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
-            </Button>
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" />
 
             <Button Content="SAVE" IsDefault="True" Style="{DynamicResource MaterialDesignFlatButton}" HorizontalAlignment="Right"
-                    Command="Save" >
-            </Button>
+                    Command="Save" />
         </Grid>
     </Grid>
 </UserControl>

@@ -11,10 +11,7 @@ namespace RichTextEditor.Features
             DependencyProperty.RegisterAttached("Enable",
                 typeof(bool), typeof(PositiveIntegerInput), new FrameworkPropertyMetadata(false, OnEnableChanged));
 
-        internal static bool GetEnable(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(EnableProperty);
-        }
+        internal static bool GetEnable(DependencyObject obj) => (bool)obj.GetValue(EnableProperty);
 
         internal static void SetEnable(DependencyObject obj, bool value)
         {
@@ -151,10 +148,7 @@ namespace RichTextEditor.Features
             DependencyProperty.RegisterAttached("Enable",
                 typeof(bool), typeof(ScrollViewContentDragable), new FrameworkPropertyMetadata(false, OnEnableChanged));
 
-        internal static bool GetEnable(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(EnableProperty);
-        }
+        internal static bool GetEnable(DependencyObject obj) => (bool)obj.GetValue(EnableProperty);
 
         internal static void SetEnable(DependencyObject obj, bool value) => obj.SetValue(EnableProperty, value);
 

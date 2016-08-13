@@ -9,10 +9,7 @@ namespace RichTextEditor.Features
     [ValueConversion(typeof(object), typeof(bool))]
     internal class ObjectToBooleanConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value != null;
-        }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value != null;
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -23,10 +20,7 @@ namespace RichTextEditor.Features
     [ValueConversion(typeof(string), typeof(bool))]
     internal class StringToBooleanConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return !string.IsNullOrEmpty((string)value);
-        }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => !string.IsNullOrEmpty((string)value);
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
