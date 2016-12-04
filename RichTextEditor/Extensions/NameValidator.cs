@@ -3,6 +3,7 @@ using System.Windows.Controls;
 
 namespace RichTextEditor.Extensions
 {
+
     internal class NameValidator : ValidationRule
     {
         public bool IsNullable { get; set; } = false;

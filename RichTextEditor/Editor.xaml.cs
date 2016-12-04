@@ -17,6 +17,7 @@ using RichTextEditor.Extensions;
 using RichTextEditor.Models;
 using RichTextEditor.Views;
 using HtmlDocument = RichTextEditor.Models.HtmlDocument;
+
 namespace RichTextEditor
 {
     /// <summary>
@@ -313,15 +314,17 @@ namespace RichTextEditor
                 // ignored
             }
 
-            _FONT_SIZE_LIST.ItemsSource = GetDefaultFontSizes();
+            _FONT_SIZE_LIST.ItemsSource = DefaultFontSizes;
             _FONT_SIZE_LIST.SelectionChanged += OnFontSizeChanged;
             _CODE_EDITOR.FontFamily = srcfamily;
             _CODE_EDITOR.FontSize = srcsize;
         }
 
-        private IEnumerable<FontSize> GetDefaultFontSizes()
+        private IEnumerable<FontSize> DefaultFontSizes
         {
-            var ls = new List<FontSize>
+            get
+            {
+                var ls = new List<FontSize>
             {
                 Models.FontSize.XxSmall,
                 Models.FontSize.XSmall,
@@ -331,7 +334,8 @@ namespace RichTextEditor
                 Models.FontSize.XLarge,
                 Models.FontSize.XxLarge
             };
-            return new ReadOnlyCollection<FontSize>(ls);
+                return new ReadOnlyCollection<FontSize>(ls);
+            }
         }
 
         private void OnFontFamilyChanged(object sender, SelectionChangedEventArgs e)

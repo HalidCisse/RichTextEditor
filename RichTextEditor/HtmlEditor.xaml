@@ -244,7 +244,7 @@
                 <ToolBar x:Name="_COMMAND_BAR">
                     <ToolBar.Resources>
 
-                        <Style x:Key="_BUTTON_STYLE" TargetType="{x:Type ButtonBase}" >
+                        <Style x:Key="ButtonStyle" TargetType="{x:Type ButtonBase}" >
                             <Setter Property="Margin" Value="0" />
                             <Setter Property="Foreground" Value="DarkSlateGray" />
                             <Setter Property="VerticalAlignment" Value="Center" />
@@ -267,7 +267,7 @@
                             </Setter>
                         </Style>
 
-                        <Style x:Key="_TOOGLE_STYLE" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource _BUTTON_STYLE}">
+                        <Style x:Key="ToogleStyle" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource ButtonStyle}">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -311,22 +311,22 @@
                         </ComboBox.ItemContainerStyle>
                     </ComboBox>
 
-                    <ToggleButton x:Name="_TOGGLE_BOLD" Style="{DynamicResource _TOOGLE_STYLE}"
+                    <ToggleButton x:Name="_TOGGLE_BOLD" Style="{DynamicResource ToogleStyle}"
                                     ToolTip="{x:Static resc:UiText.Button_Bold}" Command="features:HtmlEditingCommands.Bold">
                         <materialDesign:PackIcon Kind="FormatBold" />
                     </ToggleButton>
 
-                    <ToggleButton x:Name="_TOGGLE_ITALIC" Style="{DynamicResource _TOOGLE_STYLE}"
+                    <ToggleButton x:Name="_TOGGLE_ITALIC" Style="{DynamicResource ToogleStyle}"
                                     ToolTip="{x:Static resc:UiText.Button_Italic}" Command="features:HtmlEditingCommands.Italic">
                         <materialDesign:PackIcon Kind="FormatItalic" />
                     </ToggleButton>
 
-                    <ToggleButton x:Name="_TOGGLE_UNDERLINE" Style="{DynamicResource _TOOGLE_STYLE}"
+                    <ToggleButton x:Name="_TOGGLE_UNDERLINE" Style="{DynamicResource ToogleStyle}"
                                     ToolTip="{x:Static resc:UiText.Button_Underline}" Command="features:HtmlEditingCommands.Underline">
                         <materialDesign:PackIcon Kind="FormatUnderline" />
                     </ToggleButton>
 
-                    <ToggleButton x:Name="_TOGGLE_FONT_COLOR" Style="{DynamicResource _TOOGLE_STYLE}"
+                    <ToggleButton x:Name="_TOGGLE_FONT_COLOR" Style="{DynamicResource ToogleStyle}"
                                     ToolTip="{x:Static resc:UiText.Button_FontColor}">
                         <ToggleButton.ContextMenu>
                             <ContextMenu x:Name="_FONT_COLOR_CONTEXT_MENU" Style="{StaticResource ToggleContextMenu}">
@@ -336,7 +336,7 @@
                         <Image Style="{StaticResource ToolBarImage}" Source="/RichTextEditor;Component/Resources/Images/fontcolor.png" />
                     </ToggleButton>
 
-                    <ToggleButton x:Name="_TOGGLE_LINE_COLOR" Style="{DynamicResource _TOOGLE_STYLE}"
+                    <ToggleButton x:Name="_TOGGLE_LINE_COLOR" Style="{DynamicResource ToogleStyle}"
                                     ToolTip="{x:Static resc:UiText.Button_LineColor}">
                         <ToggleButton.ContextMenu>
                             <ContextMenu x:Name="_LINE_COLOR_CONTEXT_MENU" Style="{StaticResource ToggleContextMenu}">
@@ -348,45 +348,45 @@
 
                     <Separator />
 
-                    <ToggleButton x:Name="_TOGGLE_BULLETED_LIST" Style="{DynamicResource _TOOGLE_STYLE}"
+                    <ToggleButton x:Name="_TOGGLE_BULLETED_LIST" Style="{DynamicResource ToogleStyle}"
                                     ToolTip="{x:Static resc:UiText.Button_BulletedList}" Command="features:HtmlEditingCommands.BubbledList">
                         <materialDesign:PackIcon Kind="FormatListBulleted" />
                     </ToggleButton>
 
-                    <ToggleButton x:Name="_TOGGLE_NUMBERED_LIST" Style="{DynamicResource _TOOGLE_STYLE}"
+                    <ToggleButton x:Name="_TOGGLE_NUMBERED_LIST" Style="{DynamicResource ToogleStyle}"
                                     ToolTip="{x:Static resc:UiText.Button_NumberedList}" Command="features:HtmlEditingCommands.NumericList">
                         <materialDesign:PackIcon Kind="FormatListNumbers" />
                     </ToggleButton>
 
-                    <RadioButton x:Name="_TOGGLE_JUSTIFY_LEFT" Style="{DynamicResource _TOOGLE_STYLE}"
+                    <RadioButton x:Name="_TOGGLE_JUSTIFY_LEFT" Style="{DynamicResource ToogleStyle}"
                                     ToolTip="{x:Static resc:UiText.Button_JustifyLeft}" GroupName="Alignment" Command="features:HtmlEditingCommands.JustifyLeft">
                         <materialDesign:PackIcon Kind="FormatAlignLeft" />
                     </RadioButton>
 
-                    <RadioButton x:Name="_TOGGLE_JUSTIFY_CENTER" Style="{DynamicResource _TOOGLE_STYLE}"
+                    <RadioButton x:Name="_TOGGLE_JUSTIFY_CENTER" Style="{DynamicResource ToogleStyle}"
                                     ToolTip="{x:Static resc:UiText.Button_JustifyCenter}" GroupName="Alignment" Command="features:HtmlEditingCommands.JustifyCenter">
                         <materialDesign:PackIcon Kind="FormatAlignCenter" />
                     </RadioButton>
 
-                    <RadioButton x:Name="_TOGGLE_JUSTIFY_RIGHT" Style="{DynamicResource _TOOGLE_STYLE}"
+                    <RadioButton x:Name="_TOGGLE_JUSTIFY_RIGHT" Style="{DynamicResource ToogleStyle}"
                                     ToolTip="{x:Static resc:UiText.Button_JustifyRight}" GroupName="Alignment" Command="features:HtmlEditingCommands.JustifyRight">
                         <materialDesign:PackIcon Kind="FormatAlignRight" />
                     </RadioButton>
 
                     <Separator />
 
-                    <Button x:Name="_INSERT_HYPERLINK" Style="{DynamicResource _BUTTON_STYLE}"
+                    <Button x:Name="_INSERT_HYPERLINK" Style="{DynamicResource ButtonStyle}"
                             ToolTip="{x:Static resc:UiText.Button_InsertHyperlink}" Command="features:HtmlEditingCommands.InsertHyperlink">
                         <materialDesign:PackIcon Kind="LinkVariant" />
                     </Button>
 
-                    <Button x:Name="_INSERT_IMAGE" Style="{DynamicResource _BUTTON_STYLE}"
+                    <Button x:Name="_INSERT_IMAGE" Style="{DynamicResource ButtonStyle}"
                             ToolTip="{x:Static resc:UiText.Button_InsertImage}"
                             Command="features:HtmlEditingCommands.InsertImage">
                         <materialDesign:PackIcon Kind="Image" />
                     </Button>
 
-                    <Button x:Name="_INSERT_TABLE" Style="{DynamicResource _BUTTON_STYLE}"
+                    <Button x:Name="_INSERT_TABLE" Style="{DynamicResource ButtonStyle}"
                             ToolTip="{x:Static resc:UiText.Button_InsertTable}"
                             Command="features:HtmlEditingCommands.InsertTable">
                         <materialDesign:PackIcon Kind="Table" />
@@ -394,7 +394,7 @@
 
                     <Separator />
 
-                    <ToggleButton x:Name="_TOGGLE_CODE_MODE" Style="{DynamicResource _TOOGLE_STYLE}"
+                    <ToggleButton x:Name="_TOGGLE_CODE_MODE" Style="{DynamicResource ToogleStyle}"
                                     ToolTip="{x:Static resc:UiText.Button_CodeMode}">
                         <materialDesign:PackIcon Kind="CodeTags" />
                     </ToggleButton>
