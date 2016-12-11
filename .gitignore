@@ -127,7 +127,4 @@ ClientBin/
 /TestResult.xml
 /Releases
 Releases/
-
 *.nupkg
-*.Cache
-*.dll
